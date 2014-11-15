@@ -6,6 +6,7 @@ public class Administrador {
 	public static LlistaVies llistaVies;
 	
 	public static void main(String[] args) {
+		int a;
 		
 	}
 
