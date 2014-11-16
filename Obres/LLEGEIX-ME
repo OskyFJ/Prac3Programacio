@@ -1,0 +1,31 @@
+Com que xerro molt pel whatsapp... recordaré el què s'ha de fer:
+
+-Crear tots els mètodes per accedir a les dades de forma bàsica (CRUD):
+	-crear     (Create)
+	-llegir    (Read)
+	-modificar (Update)
+	-esborrar  (Delete)
+	
+	Crear-ne els necessaris (!).
+	
+	Per a les llistes he deixat un exemple de com implementar una llista per evitar:
+		-null pointer (accedir a un element que en realitat es null [no s'ha fet el new])
+		-index out of bounds (accedir en un rang fora de la llista)
+		
+	També incorpora el següent:
+		-redimensionament al arribar al tope i afegir (copiar l'array en un nou array de +10 posicions)
+		-redimensionament al esborrar i tenir la meitat d'ocupació (eficiència)
+		-metode afegir (element) => treballarem afegint i esborrant ELEMENTS
+		-metode esborrar (element) => treballarem afegint i esborrant ELEMENTS
+		-metode getElementNum (get amb un índex => hauria de llençar una excepcio!!!
+			AL LORO SI RETORNA NULL, COMPROVAR RANG ABANS DE CRIDAR!)
+		-metode quantsElements
+	IMPORTANT: substituir "casa" pel nostre "element"
+	
+	També podeu fer servir la pràctica que ja està mig implementada pel Xavi, com a referència!!
+	
+	Està molt bé tenir codi preparat d'accés a fitxers i serà molt útil casi tot el codi fet,
+	però he de fer molts informes de com he repartit la prac i una mica "ens obliguen" a treballar d'aquesta forma.
+	
+	Segur que surt tot molt bé ;)
+		
