@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Oriol
+ *
+ */
 public class Tram {
 	private Via via; //atribut extra perque cada via ja coneix els seus trams
 	private int nTram;

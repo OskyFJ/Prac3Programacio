@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Xavi
+ *
+ */
 public class Trajecte {
 	private LlistaTrams llistaTrams;
 	private String nomTrajecte;

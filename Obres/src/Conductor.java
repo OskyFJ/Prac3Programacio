@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Julián
+ *
+ */
 public class Conductor {
 	private String nom;
 	private LlistaTrajectes llistaTrajectes;

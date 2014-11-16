@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Julián
+ *
+ */
 public class Via {
 	private LlistaTrams llistaTrams;
 	private String poble1;
