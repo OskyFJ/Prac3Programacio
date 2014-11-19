@@ -47,17 +47,17 @@ public class Trajecte {
 		int contPoblacio=0;
 		while(contTrams<trams.length){
 			if(trams.length==1){
-				while(contPoblacio<trams[contTrams].getpoblacio().length){
+				while(contPoblacio<trams[contTrams].getPoblacio().length){
 					if(contPoblacio==0){
-						trajectes+=trams[contTrams].getpoblacio()[1];
+						trajectes+=trams[contTrams].getPoblacio()[1];
 					}
-					else trajectes+=" - "+trams[contTrams].getpoblacio()[1];
+					else trajectes+=" - "+trams[contTrams].getPoblacio()[1];
 					contPoblacio++;
 				}
 			}
 			else{
-				while(contPoblacio<trams[contTrams].getpoblacio().length){
-					if(contPoblacio!=0) trajectes+=" - "+trams[contTrams].getpoblacio()[1];
+				while(contPoblacio<trams[contTrams].getPoblacio().length){
+					if(contPoblacio!=0) trajectes+=" - "+trams[contTrams].getPoblacio()[1];
 					contPoblacio++;
 				}
 			}

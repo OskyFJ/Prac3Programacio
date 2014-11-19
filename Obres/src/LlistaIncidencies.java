@@ -33,29 +33,60 @@ public class LlistaIncidencies {
 	}
 	
 	public Incidencia buscarIncidenciaTram(Tram tram){
-		int cont=0;
-		int pos=-1;
 		Obra obra=null;
 		Accident accident=null;
 		Obra obraLlista=null;
 		Accident accidentLlista=null;
 		Obra obraBuscar=null;
 		Accident accidentBuscar=null;
+		int cont=0;
+		String poblacio1=tram.getPoblacio()[0];
+		String poblacio2=tram.getPoblacio()[1];
 		
 		while(cont<numIncidencies){
+			
 			if(llista[cont] instanceof Obra) obraLlista = (Obra) llista[cont]; 
 			else accidentLlista = (Accident) llista[cont]; 
-		
-			if(accidentLlista!=null){
-				boolean igualsDataInici=obra.getDataInici().equals(obraLlista.getDataInici());
-				boolean igualsDataFi=obra.getDataFi().equals(obraLlista.getDataFi());
-				boolean igualsTipus=obra.getTipus().equals(obraLlista.getTipus());
-				if(igualsDataFi && igualsDataInici && igualsTipus) accidentBuscar=accidentLlista; 
-			}
+				
+			boolean igualPoblacio1=llista[cont].tramAfectat.getPoblacio()[0].equals(poblacio1);
+			boolean igualPoblacio2=llista[cont].tramAfectat.getPoblacio()[1].equals(poblacio2);
 			
+			if(obraLlista!=null && (igualPoblacio1 && igualPoblacio2)) obraBuscar=obraLlista; 
+			
+			else if(accidentLlista!=null && (igualPoblacio1 && igualPoblacio2)) accidentBuscar=accidentLlista;
+			
+			obraLlista=null;
+			accidentLlista=null;
 		cont++;
 		}
-		return pos;
+		if(obraBuscar!=null) return obraBuscar;
+		else if(obraBuscar!=null) return accidentBuscar;
+		else return null;
+		
+		
+	}
+	
+	public Incidencia[] buscarIncidenciaVia(String via){
+		int cont=0;
+		Incidencia[] incidencies = null;
+		int contIncidencies=0;
+		while(cont<numIncidencies){
+			if(llista[cont].tramAfectat.getVia().equals(via)) contIncidencies++;	
+		cont++;
+		}
+		cont=0;
+		incidencies=new Incidencia[contIncidencies];
+		contIncidencies=0;
+		
+		while(cont<numIncidencies){
+			if(llista[cont].tramAfectat.getVia().equals(via)){
+				incidencies[contIncidencies]=llista[cont];
+				contIncidencies++;	
+			}
+		cont++;
+		}
+		
+		return incidencies;
 	}
 	
 	public void agregarincidencia(Incidencia incidencia){
@@ -109,11 +140,12 @@ public class LlistaIncidencies {
 					for (int i = 0; i < numIncidencies; i++) {
 						if(llista[i] instanceof Obra){
 							Obra obra = (Obra) llista[i];
-							int tipus;
-							System.out.println(obra.getTipusObra());
-							//fitxerout.println(llista[i].getTipus());
+							fitxerout.println((i+1)+","+obra.getDataInici()+","+obra.getDataFi()+","+obra.getTipusObra());
 						}
-						//else fitxerout.println(llista[i].getDni()+","+llista[i].getnum_telefon()+","+llista[i].getnom_conductor());
+						else{
+							Accident accident = (Accident) llista[i];
+							fitxerout.println((i+1)+","+accident.getData());
+						}
 					}
 				fitxerout.close();
 				incidencies.delete();

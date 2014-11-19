@@ -74,9 +74,10 @@ public class LlistaConductors {
 				temp.createNewFile();
 		}
 		File conductors = new File("conductors.txt");
-		PrintWriter escribir = new PrintWriter(new FileWriter("temp.txt"));
 		
-		try{
+		try{		
+			PrintWriter escribir = new PrintWriter(new FileWriter("temp.txt"));
+
 			escribir.println(numConductors);
 				for (int i = 0; i < numConductors; i++) {
 					escribir.println(llista[i].getdni()+","+llista[i].getnum_telefon()+","+llista[i].getnom_conductor());
@@ -85,6 +86,8 @@ public class LlistaConductors {
 			conductors.delete();
 			temp.renameTo(conductors);
 				
+		}catch(IOException e){
+			System.out.println(e);
 		}
 	}
 	
