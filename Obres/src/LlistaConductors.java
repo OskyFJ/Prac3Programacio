@@ -24,16 +24,6 @@ public class LlistaConductors {
 		return llista;
 	}
 	
-	public boolean buscarnou(String dni){
-		boolean trobat=false;
-		int cont=0;
-		while(cont<numConductors && !trobat){
-			if(llista[cont].getdni().equals(dni)) trobat=true;
-		cont++;
-		}
-		return trobat;
-	}
-	
 	public void agregarconductor(Conductor conductor){
 		
 		if(numConductors<llista.length){
@@ -52,7 +42,7 @@ public class LlistaConductors {
 		}
 	}
 	
-	public int buscarconductor(String dni){
+	public int buscarConductor(String dni){
 		int cont=0;
 		int pos=-1;
 		while(cont<numConductors){
@@ -108,5 +98,7 @@ public class LlistaConductors {
 		
 	return conductor;
 	}
+	
+	
 	
 }

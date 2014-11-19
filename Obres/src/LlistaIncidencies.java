@@ -1,9 +1,25 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  * 
  * @author Xavi
  *
  */
 public class LlistaIncidencies {
+	public int getNumIncidencies() {
+		return numIncidencies;
+	}
+
+	public void setNumIncidencies(int numIncidencies) {
+		this.numIncidencies = numIncidencies;
+	}
+
 	private Incidencia[] llista;
 	private int numIncidencies;
 
@@ -16,11 +32,27 @@ public class LlistaIncidencies {
 		return llista;
 	}
 	
-	public int buscarincidencia(Incidencia incidencia){
+	public Incidencia buscarIncidenciaTram(Tram tram){
 		int cont=0;
 		int pos=-1;
+		Obra obra=null;
+		Accident accident=null;
+		Obra obraLlista=null;
+		Accident accidentLlista=null;
+		Obra obraBuscar=null;
+		Accident accidentBuscar=null;
+		
 		while(cont<numIncidencies){
-			if(llista[cont].getnomtrajecte().equals(nomtrajecte)) pos=cont;
+			if(llista[cont] instanceof Obra) obraLlista = (Obra) llista[cont]; 
+			else accidentLlista = (Accident) llista[cont]; 
+		
+			if(accidentLlista!=null){
+				boolean igualsDataInici=obra.getDataInici().equals(obraLlista.getDataInici());
+				boolean igualsDataFi=obra.getDataFi().equals(obraLlista.getDataFi());
+				boolean igualsTipus=obra.getTipus().equals(obraLlista.getTipus());
+				if(igualsDataFi && igualsDataInici && igualsTipus) accidentBuscar=accidentLlista; 
+			}
+			
 		cont++;
 		}
 		return pos;
@@ -58,6 +90,39 @@ public class LlistaIncidencies {
 		}
 		llista=incidencies;
 		numIncidencies--;
+	}
+	
+	public void actualitzarLlista() throws IOException{
+		File temp = new File("temp.txt");
+		if (!temp.exists()){
+			temp.createNewFile();
+		}
+		File incidencies = new File("trajectes.txt");
+		if(!incidencies.exists()){
+			incidencies.createNewFile();
+		}
+		
+		try{		
+		PrintWriter fitxerout = new PrintWriter(new FileWriter("temp.txt"));
+			if(numIncidencies!=0){
+				fitxerout.println(numIncidencies);
+					for (int i = 0; i < numIncidencies; i++) {
+						if(llista[i] instanceof Obra){
+							Obra obra = (Obra) llista[i];
+							int tipus;
+							System.out.println(obra.getTipusObra());
+							//fitxerout.println(llista[i].getTipus());
+						}
+						//else fitxerout.println(llista[i].getDni()+","+llista[i].getnum_telefon()+","+llista[i].getnom_conductor());
+					}
+				fitxerout.close();
+				incidencies.delete();
+				temp.renameTo(incidencies);
+			}
+		
+		}catch(IOException e){
+			System.out.println(e);
+		}
 	}
 	
 }

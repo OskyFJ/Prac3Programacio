@@ -17,6 +17,30 @@ public class Trajecte {
 		this.nomTrajecte=nomtrajecte;
 	}
 	
+	public Tram[] getTrams(){
+		return trams;
+	}
+	
+	public LlistaTrams getLlistaTrams() {
+		return llistaTrams;
+	}
+
+	public void setLlistaTrams(LlistaTrams llistaTrams) {
+		this.llistaTrams = llistaTrams;
+	}
+
+	public String getNomTrajecte() {
+		return nomTrajecte;
+	}
+
+	public void setNomTrajecte(String nomTrajecte) {
+		this.nomTrajecte = nomTrajecte;
+	}
+
+	public void setTrams(Tram[] trams) {
+		this.trams = trams;
+	}
+
 	public String toString(){
 		String trajectes="";
 		int contTrams=0;
