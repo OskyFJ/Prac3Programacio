@@ -1,0 +1,13 @@
+12
+AP-2,4,Montblanc,Vila-rodona,la Bisbal del Penedès,Santa Oliva,El Vendrell
+C-14,5,Montblanc,La Riba,Alcover,La Selva del Camp,Reus,Salou
+N-340,3,El Vendrell,Roda de Berà,Torredembarra,Tarragona
+T-722,3,Alcover,Vilallonga,El Morell,Constantí
+A-7,2,Cambrils,Vila-seca,Tarragona
+AP-7,4,Cambrils,Constanti,Tarragona,Roda de Berà,El Vendrell
+N-240,4,Tarragona,Perafort,Vallmoll,Valls,Montblanc
+T11,2,Les Borges del Camp,Reus,Tarragona
+C-31,1,Salou,Vila-seca
+C-51,4,El Vendrell,La Bisbal del Penedès,Vila-rodona,Puigpelat,Valls
+C-37,1,Alcover,Valls
+C-422,1,La Selva del Camp,Constantí
