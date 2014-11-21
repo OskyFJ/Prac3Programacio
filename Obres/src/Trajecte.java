@@ -11,35 +11,55 @@ public class Trajecte {
 	private Tram[] trams;
 	private String nomConductor;
 	
+	/** CONSTRUCTOR --> rebra per paràmetre el nom del conductor, el nom del trajecte i els trams i els assignarem
+	 * a les variables de la propia classe.
+	
+	**
+	 * 
+	 * @param nom_conductor, el nom del conductor del trajecte
+	 * @param nomtrajecte, el nom del trajecte
+	 * @param trams, els trams que componen el trajecte
+	 * 
+	 */
+	
 	public Trajecte(String nom_conductor, String nomtrajecte,Tram[] trams){
 		this.nomConductor=nom_conductor;
 		this.trams=trams;
 		this.nomTrajecte=nomtrajecte;
 	}
 	
+	/** GETTERS i SETTERS
+	 * 
+	 * getTrams():
+	 * 
+	 * @return els trams que componen el trajectes.
+	 */
+	
 	public Tram[] getTrams(){
 		return trams;
 	}
 	
-	public LlistaTrams getLlistaTrams() {
-		return llistaTrams;
-	}
 
 	public void setLlistaTrams(LlistaTrams llistaTrams) {
 		this.llistaTrams = llistaTrams;
 	}
+	
+	/**
+	 * getNomTrajecte():
+	 * 
+	 * @return el nom del trajecte
+	 */
 
 	public String getNomTrajecte() {
 		return nomTrajecte;
 	}
-
-	public void setNomTrajecte(String nomTrajecte) {
-		this.nomTrajecte = nomTrajecte;
-	}
-
-	public void setTrams(Tram[] trams) {
-		this.trams = trams;
-	}
+	
+	/**
+	 * toString():
+	 * 
+	 * @return la informacio del trajecte en un String. El nom del conductor, el nom del trajecte i els pobles (trams) 
+	 * que composen el trajecte
+	 */
 
 	public String toString(){
 		String trajectes="";

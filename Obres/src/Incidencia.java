@@ -4,11 +4,8 @@
  *
  */
 public abstract class Incidencia {
-	protected Tram tramAfectat;
 	
-	public Tram getTram() {
-		return tramAfectat;
-	}
+	protected Tram tramAfectat;
 	
 	@Override
 	public abstract String toString();
