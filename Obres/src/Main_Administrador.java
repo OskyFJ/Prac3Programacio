@@ -12,5 +12,10 @@ public class Main_Administrador {
 	public static void main(String[] args) {
 		
 	}
+	
+	public void provarTram() {
+		Tram t;
+		System.out.println("");
+	}
 
 }
