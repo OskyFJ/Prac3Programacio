@@ -4,6 +4,10 @@
  *
  */
 public abstract class Incidencia {
-	private Tram tramAfectat;
-	int a;
+	
+	protected Tram tramAfectat;
+	
+	@Override
+	public abstract String toString();
+	
 }
