@@ -55,6 +55,18 @@ public class Trajecte {
 	}
 	
 	/**
+	 * getNomConductor():
+	 * 
+	 * @return el nom del conductor del trajecte
+	 */
+	
+	public String getNomConductor(){
+		return nomConductor;
+	}
+	
+	/**
+	 * MÈTODES
+	 * 
 	 * toString():
 	 * 
 	 * @return la informacio del trajecte en un String. El nom del conductor, el nom del trajecte i els pobles (trams) 
