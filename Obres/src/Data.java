@@ -10,26 +10,18 @@ public class Data {
 
 	
 	
-	/** constructor de les dates, guarda la data de la incidencia actual i comprova que els dies, els mesos i els anys
-	  son correctes*/
+	/** constructor de les dates, guarda la data de la incidencia actual*/
 	
-	public Data (int dia,int mes, int any) throws foraderang {
-		
-		
-		try {this.dia=dia;
-		    if (dia<0 || dia>31) throw new foraderang(0,30);
-		}
-		
-	 catch (foraderang e) {System.out.println();}
-		
-		
-		
-		
-		
+	public Data (int dia,int mes, int any) {
+		this.dia=dia;
 		this.mes=mes;
 		this.any=any;
 		
 	}
+	
+	
+	
+	
 	
 	
 	public String toString() {
@@ -42,11 +34,11 @@ public class Data {
 	
 	
 	public int getDia() {
-		return dia;
+		return dia
 	}
 	
 	public void setDia(int dia) {
-		this.dia = dia;
+		this.dia= dia;
 	}
 	
 	public int getMes() {
