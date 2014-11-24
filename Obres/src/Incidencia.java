@@ -4,16 +4,10 @@
  *
  */
 public abstract class Incidencia {
-	private Tram tramAfectat;
-	int a;
 	
-	public Incidencia(Tram tram, int a){
-		tramAfectat=tram;
-		this.a=a;
-	}
+	protected Tram tramAfectat;
 	
-	public Tram gettram() {
-		return tramAfectat;
-	}
+	@Override
+	public abstract String toString();
 	
 }

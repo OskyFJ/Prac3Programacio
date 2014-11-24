@@ -8,8 +8,24 @@ public class Data {
 	private int mes;
 	private int any;
 
-	public Data (int dia,int mes, int any) {
-		this.dia=dia;
+	
+	
+	/** constructor de les dates, guarda la data de la incidencia actual i comprova que els dies, els mesos i els anys
+	  son correctes*/
+	
+	public Data (int dia,int mes, int any) throws foraderang {
+		
+		
+		try {this.dia=dia;
+		    if (dia<0 || dia>31) throw new foraderang(0,30);
+		}
+		
+	 catch (foraderang e) {System.out.println();}
+		
+		
+		
+		
+		
 		this.mes=mes;
 		this.any=any;
 		

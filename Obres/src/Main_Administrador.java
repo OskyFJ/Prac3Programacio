@@ -12,7 +12,7 @@ public class Main_Administrador {
 	public static void main(String[] args) {
 		
 	LlistaVies prova1= new LlistaVies(456); 
-	System.out.println(+llistaVies[0]);
+	System.out.println(llistaVies[0]);
 	}
 
 }
