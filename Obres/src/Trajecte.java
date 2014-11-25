@@ -39,11 +39,6 @@ public class Trajecte {
 		return trams;
 	}
 	
-
-	public void setLlistaTrams(LlistaTrams llistaTrams) {
-		this.llistaTrams = llistaTrams;
-	}
-	
 	/**
 	 * getNomTrajecte():
 	 * 
