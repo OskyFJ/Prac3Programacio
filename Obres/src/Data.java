@@ -34,7 +34,7 @@ public class Data {
 	
 	
 	public int getDia() {
-		return dia
+		return dia;
 	}
 	
 	public void setDia(int dia) {
