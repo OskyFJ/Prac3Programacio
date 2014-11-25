@@ -14,5 +14,10 @@ public class Main_Administrador {
 	LlistaVies prova1= new LlistaVies(456); 
 	System.out.println(llistaVies[0]);
 	}
+	
+	public void provarTram() {
+		Tram t;
+		System.out.println("");
+	}
 
 }
