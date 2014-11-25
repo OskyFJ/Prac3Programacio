@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+import java.io.FileWriter;
+
 // import .Trajecte; falta posar el nom del Package !!!!!!!!!!!!!!!
 
 /**
@@ -88,6 +94,42 @@ public class LlistaTrajectes {
 		if(n<0 || n>=numTrajectes) return null; //llençar excepcio
 		return llista[n];
 	}
+	
+	public void actualitzarLlista(LlistaVies llistaVies) throws IOException{
+		File temp = new File("temp.txt");
+		if (!temp.exists()){
+				temp.createNewFile();
+		}
+		File trams = new File("trams.txt");
+		
+		try{		
+			PrintWriter escribir = new PrintWriter(new FileWriter("temp.txt"));
+
+			escribir.println(numTrajectes);
+				for (int i = 0; i < numTrajectes; i++) {
+					String vies="";
+					int numTrams=0;
+					while(numTrams<llista[i].getTrams().length){
+						vies+=llistaVies.getViaNumTram(llista[i].getTrams()[numTrams].getPoblacio()[0], llista[i].getTrams()[numTrams].getPoblacio()[1]);
+					numTrams++;
+					}
+					int num_trams=0;
+					StringTokenizer token = new StringTokenizer(vies, ",");
+					while(token.nextToken()!=null){
+						num_trams++;
+					}
+					num_trams=num_trams/2;
+					escribir.println(llista[i].getNomConductor()+","+llista[i].getNomTrajecte()+","+num_trams+","+vies);
+				}
+			escribir.close();
+			trams.delete();
+			temp.renameTo(trams);
+				
+		}catch(IOException e){
+			System.out.println(e);
+		}
+	}
+	
 }
 
 
