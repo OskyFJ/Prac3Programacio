@@ -1,5 +1,3 @@
-import llistes.Tram;
-
 /**
  * 
  * @author Julián
