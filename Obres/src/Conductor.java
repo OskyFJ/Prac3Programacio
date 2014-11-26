@@ -14,12 +14,10 @@ public class Conductor {
 		this.numero_mobil=numero_mobil;		
 	}
 	
+	//Afegir trajecte a un conductor
+	
 	public int getNumero_mobil() {
 		return numero_mobil;
-	}
-
-	public void setNumero_mobil(int numero_mobil) {
-		this.numero_mobil = numero_mobil;
 	}
 
 	public String getNom_conductor() {
