@@ -134,7 +134,9 @@ public static void Administrador() throws IOException{
 			StringTokenizer tok = new StringTokenizer(linia, ",");
 			int numVies = Integer.parseInt(tok.nextToken());
 			int numTrams = Integer.parseInt(tok.nextToken());
+			LlistaTrams llista;
 			for (int i = 0; i < numVies; i++) {
+				
 				linia = f1.readLine();
 				tok = new StringTokenizer(linia, ",");
 				nom_via = tok.nextToken();
@@ -180,7 +182,7 @@ public static void Administrador() throws IOException{
 			if(tipus.equals("nacional")) tipusV=TipusVia.NACIONAL;
 			if(tipus.equals("altres")) tipusV=TipusVia.ALTRES;
 
-			LlistaTrams llista= new LlistaTrams(tram_t);
+			llista= new LlistaTrams(trams_t);
 			Via via=new Via(poblacio1,poblacio2,tipusV,nom_via,llista);
 			llistaVies.agregarVia(via);
 			cont=0;
@@ -206,7 +208,7 @@ public static void Administrador() throws IOException{
 					codi = tok.nextToken();
 					telefon = Integer.parseInt(tok.nextToken());
 					nom_conductor=tok.nextToken();
-					Conductor conductor = new Conductor(codi, telefon, nom_conductor);
+					Conductor conductor = new Conductor(codi, nom_conductor,telefon);
 					llistaConductors.agregarconductor(conductor);
 				}
 				f1.close();
@@ -380,7 +382,70 @@ public static void Administrador() throws IOException{
 						llistaVies.agregarVia(new Via(poblacio[0],poblacio[poblacio.length-1],tipus,nom_via,llista));
 					}
 					break;
+					
+				case 2:
+					
+					System.out.println("Nom de la via a afegir el tram? \n");
+					int cont=0;
+					int opcio_via=0;
+					String nom_via;
+					while(opcio_via<1 || opcio_via>trams.Getnumtrams()){
+						while(cont<llistaTrams.Getnumtrams()){
+							System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+							cont++;
+						}
+						System.out.println("\nOpcio de la població? ");
+						opcio_via=scan.nextInt();
+						if(opcio_via<1 || opcio_via>trams.Getnumtrams()) System.out.println("\nOpcio incorrecta! Intenta-ho de nou!\n");
+					}
+					nom_via=trams.gettrams()[opcio_via-1].nom_via;
+					System.out.println("Sobre quina poblacio vols afegir un tram? \n");
+					cont=0;
+					int opcio_tram=0;
+					Trams tram = trams.gettram(nom_via);
+					while(opcio_tram<1 || opcio_tram>tram.GetPoblacio().length){
+						while(cont<tram.GetPoblacio().length){
+							System.out.println((cont+1)+") "+tram.GetPoblacio()[cont]);
+							cont++;
+						}
+						System.out.println("Opcio de la població? ");
+						opcio_tram=scan.nextInt();
+						if(opcio_tram<1 || opcio_tram>tram.GetPoblacio().length) System.out.println("\nOpcio incorrecta! Intenta-ho de nou!\n");
+					}
+					System.out.println("Fins a quina poblacio vols afegir el tram?\n");
+					String[] poblacions=trams.Getpoblacions();
+					String[] act_poblacions=new String[trams.Getpoblacions().length+1];
+					cont=0;
+					int opcio_p=0;
+					while(cont<1){
+						poblacions=trams.actpoblacions(tram.GetPoblacio(),tram.GetPoblacio().length);
+						int cont_p=0;
+						while(cont_p<poblacions.length){
+							System.out.println((cont_p+1)+") "+poblacions[cont_p]);
+						cont_p++;
+						}
+						opcio_p=0;
+						while(opcio_p<1 || opcio_p>(cont_p+1)){
+							System.out.println("\nPoblacio a escollir. Opcio? ");
+							opcio_p=scan.nextInt();
+							if(opcio_p<0 || opcio_p>cont_p) System.out.println("Opcio incorrecta! Intenta-ho de nou!");
+						}
+					cont++;
+					}
+					cont=0;
+					while(cont<tram.GetPoblacio().length){
+						act_poblacions[cont]=tram.GetPoblacio()[cont];
+					cont++;
+					}
+					act_poblacions[cont]=poblacions[opcio_p-1];
+					trams.afegiruntrammes(new Trams(nom_via,act_poblacions,(tram.GetNumTrams()+1)));
+					
+					break;
+					
 				}
+				
+				
+				
 			}
 			
 		}
