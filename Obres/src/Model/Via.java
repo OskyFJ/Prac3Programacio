@@ -42,4 +42,7 @@ public class Via {
 	public String toString(){
 		return("Tipus de via: "+tipusVia+" des de "+poble1+" a "+poble2);
 	}
+	public int getNumTrams(){
+		return llistaTrams.getNumTrams();
+		}
 }
