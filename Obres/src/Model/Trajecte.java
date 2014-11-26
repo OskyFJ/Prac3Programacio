@@ -8,8 +8,6 @@ package Model;
 public class Trajecte {
 	private LlistaTrams llistaTrams;
 	private String nomTrajecte;
-	private Conductor conductor; //atribut extra cada conductor ja coneix els seus trajectes
-	private Tram[] trams;
 	private String nomConductor;
 	private String[] nom_vies;
 	
@@ -24,9 +22,9 @@ public class Trajecte {
 	 * 
 	 */
 	
-	public Trajecte(String nom_conductor, String nomtrajecte, String[] nom_vies, Tram[] trams){
+	public Trajecte(String nom_conductor, String nomtrajecte, String[] nom_vies, LlistaTrams llistatrams){
 		this.nomConductor=nom_conductor;
-		this.trams=trams;
+		this.llistaTrams=llistatrams;
 		this.nomTrajecte=nomtrajecte;
 		this.nom_vies=nom_vies;
 	}
@@ -39,7 +37,7 @@ public class Trajecte {
 	 */
 	
 	public Tram[] getTrams(){
-		return trams;
+		return llistaTrams.getLlistaTrams();
 	}
 	
 	/**
@@ -65,7 +63,16 @@ public class Trajecte {
 	/**
 	 * MÈTODES
 	 * 
-	 * toString():
+	 * agregarTrajecte():
+	 * 
+	 */
+	
+	public void agregarTrajecte(Tram tram){
+		llistaTrams.afegeixTram(tram);
+	}
+	
+	 /** 
+	  * toString():
 	 * 
 	 * @return la informacio del trajecte en un String. El nom del conductor, el nom del trajecte i els pobles (trams) 
 	 * que composen el trajecte
@@ -75,8 +82,10 @@ public class Trajecte {
 		String trajectes="";
 		int contTrams=0;
 		int contPoblacio=0;
-		while(contTrams<trams.length){
-			if(trams.length==1){
+		int numTrams=llistaTrams.getNumTrams();			
+		Tram[] trams = llistaTrams.getLlistaTrams();
+		while(contTrams<numTrams){
+			if(numTrams==1){
 				while(contPoblacio<trams[contTrams].getPoblacio().length){
 					if(contPoblacio==0){
 						trajectes+=trams[contTrams].getPoblacio()[1];

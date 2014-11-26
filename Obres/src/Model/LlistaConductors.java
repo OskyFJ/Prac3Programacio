@@ -47,6 +47,7 @@ public class LlistaConductors {
 	 */
 
 	
+	
 	public void agregarconductor(Conductor conductor){
 		
 		if(numConductors<llista.length){
@@ -54,13 +55,8 @@ public class LlistaConductors {
 			numConductors++;
 		}
 		else if(numConductors==(llista.length)){
-			Conductor[] conductors=new Conductor[llista.length+10];
-			int cont=0;
-			while(cont<numConductors){
-				conductors[cont]=llista[cont];
-			cont++;
-			}
-			conductors[cont]=conductor;
+			redimensionarllista();
+			llista[numConductors]=conductor;
 			numConductors++;
 		}
 	}
@@ -79,6 +75,22 @@ public class LlistaConductors {
 	}
 	
 	/**
+	 * redimensionarllista(): Augmentem la amplitud màxima de la llista a
+	 * 10 conductors més.
+	 * 
+	 */
+	
+	public void redimensionarllista(){
+		Conductor[] conductors_1=new Conductor[numConductors+10];
+		int cont=0;
+		while(cont<numConductors){
+		conductors_1[cont]=llista[cont];
+		cont++;
+		}
+		llista=conductors_1;
+	}
+	
+	/**
 	 * buscarConductor(dni): busquem un conductor de la llista  segons el dni passat per paràmetre.
 	 * 
 	 * @param dni del conductor que volem buscar
@@ -91,8 +103,7 @@ public class LlistaConductors {
 		int cont=0;
 		int pos=-1;
 		while(cont<numConductors){
-			if(llista[cont].getCodi_conductor().equals(dni)) pos=cont; //DIRECTOR: he canviat ".getdni()" per ".getCodi"
-			// DIRECTOR: aquí el que hauries de fer és un mètode .comparaDNI(String dni), pero així encara passa bé 
+			if(llista[cont].getCodi_conductor().equals(dni)) pos=cont;
 		cont++;
 		}
 		return pos;
@@ -137,10 +148,10 @@ public class LlistaConductors {
 	*/
 
 	
-	public void actualitzarllista(){
+	public void actualitzarllista() throws IOException{
 		File temp = new File("temp.txt");
 		if (!temp.exists()){
-				//temp.createNewFile(); //llença una excepció! (carregar de fitxer va fora d'una classe de model)
+				temp.createNewFile();
 		}
 		File conductors = new File("conductors.txt");
 		
@@ -149,8 +160,7 @@ public class LlistaConductors {
 
 			escribir.println(numConductors);
 				for (int i = 0; i < numConductors; i++) {
-					escribir.println("print que falta fer");//llista[i].getdni()+","+llista[i].getnum_telefon()+","+llista[i].getnom_conductor());
-					//DIRECTOR: aquí el que hauries de fer sí o sí és un mètode "String getInfo()" que retorni aquest carro
+					escribir.println(llista[i].getCodi_conductor()+","+llista[i].getNumero_mobil()+","+llista[i].getNom_conductor());
 				}
 			escribir.close();
 			conductors.delete();
