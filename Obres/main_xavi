@@ -1,0 +1,497 @@
+SI EL VOLEU UTULITZAR... AQUI LA TENIU:
+
+
+
+import java.io.IOException;
+import java.util.Scanner;
+
+
+public class Main {
+	
+	static Conductor[] conductors;
+	static Trams[] trams;
+	static Trajectes[] trajectes;
+	
+	
+	public static void main(String[] arg) throws IOException{
+		
+		Scanner scan = new Scanner(System.in);
+		
+		Administrador admin;
+		LlistaConductors conductors=null;
+		LlistaTrajectes trajectes=null;
+		LlistaTrams trams=null;
+		Incident incident=null;
+		int opcio_admin=0;
+		int opcio_client=4;
+		int opcio=1;
+		
+		while(opcio!=2 && opcio_admin!=8 && opcio_client!=5){
+		
+		
+			
+		System.out.println("--------------------------------------------------------");
+		System.out.println("----- BENVINGUTS A LA ADMINISTRACIÓ DE CARRETERRES -----");
+		System.out.println("--------------------------------------------------------\n");
+
+		
+			System.out.println("1) Carregar les llistes (conductors, trajectes i trams)");
+			System.out.println("2) Sortir");
+			opcio=scan.nextInt();
+			
+			if(opcio==1){
+				admin= new Administrador();
+				System.out.println("Les llistes s'han carregat correctament!\n");
+				
+				conductors=admin.Getconductors();
+				trajectes=admin.Gettrajectes();
+				trams=admin.Gettrams();
+				incident=admin.getinicident();
+				
+				while(opcio_admin!=8 || opcio_client==4){
+					opcio_client=0;
+					System.out.println("\n--------------------------------------------------------");
+					System.out.println("----- BENVINGUTS A LA ADMINISTRACIÓ DE CARRETERRES -----");
+					System.out.println("--------------------------------------------------------\n");
+				
+					System.out.println("1) Afegir via");
+					System.out.println("2) Afegir tram");
+					System.out.println("3) Gestionar incidencies (afegir o eliminar)");
+					System.out.println("4) Gestionar conductors (afegir, eliminar i consultar els seus trajectes habituals)");
+					System.out.println("5) Consultar trams/vies");
+					System.out.println("6) Consultar trams afectats per obres");
+					System.out.println("7) Consultar incidencia que es trobarà un conductor degut als seus trajectes habituals");
+					System.out.println("8) Sortir del programa!");
+					System.out.println("\n--------------------------------------------------");
+					System.out.println("\n 9) ENTRAR COM A CONDUCTOR");
+					System.out.println("\n Opcio del menu:");
+					opcio_admin=scan.nextInt();
+					
+					if(opcio_admin==1){
+						String nom_via;
+						System.out.println("Nom de la via a afegir");
+						nom_via=scan.next();
+						if(trams.BuscarPosicion(nom_via)!=-1) System.out.println("Existeix aquesta via");
+						else{
+							int num_trams=0;
+							while(num_trams<1 || num_trams>12){
+								System.out.println("Número de trams que ho formen?");
+								num_trams=scan.nextInt();
+								if(num_trams<1 || num_trams>12) System.out.println("Ha de haver com a mínim un tram i com a màxim el número de poblacions - 1");
+							}
+							int cont=0;
+							String[] poblacio=new String[num_trams+1];
+							while(cont<poblacio.length){
+								poblacio[cont]="";
+								cont++;
+							}
+							cont=0;
+						
+							String[] poblacions=trams.Getpoblacions();
+							String[] act_poblacions=poblacions;
+							
+							int opcio_p=0;
+							while(cont<num_trams+1){
+								if(cont>0) act_poblacions=trams.actpoblacions(poblacio,cont);
+								int cont_p=0;
+								while(cont_p<act_poblacions.length){
+									System.out.println((cont_p+1)+") "+act_poblacions[cont_p]);
+								cont_p++;
+								}
+								opcio_p=0;
+								while(opcio_p<1 || opcio_p>(cont_p+1)){
+									System.out.println("\nPoblacio a escollir. Opcio? ");
+									opcio_p=scan.nextInt();
+									if(opcio_p<0 || opcio_p>cont_p) System.out.println("Opcio incorrecta! Intenta-ho de nou!");
+								}
+							poblacio[cont]=act_poblacions[opcio_p-1];
+							cont++;
+							}
+							trams.afegiruntrammes(new Trams(nom_via,poblacio,num_trams));
+						}
+					}
+					
+					else if(opcio_admin==2){
+						System.out.println("Nom de la via a afegir el tram? \n");
+						int cont=0;
+						int opcio_via=0;
+						String nom_via;
+						while(opcio_via<1 || opcio_via>trams.Getnumtrams()){
+							while(cont<trams.Getnumtrams()){
+								System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+								cont++;
+							}
+							System.out.println("\nOpcio de la població? ");
+							opcio_via=scan.nextInt();
+							if(opcio_via<1 || opcio_via>trams.Getnumtrams()) System.out.println("\nOpcio incorrecta! Intenta-ho de nou!\n");
+						}
+						nom_via=trams.gettrams()[opcio_via-1].nom_via;
+						System.out.println("Sobre quina poblacio vols afegir un tram? \n");
+						cont=0;
+						int opcio_tram=0;
+						Trams tram = trams.gettram(nom_via);
+						while(opcio_tram<1 || opcio_tram>tram.GetPoblacio().length){
+							while(cont<tram.GetPoblacio().length){
+								System.out.println((cont+1)+") "+tram.GetPoblacio()[cont]);
+								cont++;
+							}
+							System.out.println("Opcio de la població? ");
+							opcio_tram=scan.nextInt();
+							if(opcio_tram<1 || opcio_tram>tram.GetPoblacio().length) System.out.println("\nOpcio incorrecta! Intenta-ho de nou!\n");
+						}
+						System.out.println("Fins a quina poblacio vols afegir el tram?\n");
+						String[] poblacions=trams.Getpoblacions();
+						String[] act_poblacions=new String[trams.Getpoblacions().length+1];
+						cont=0;
+						int opcio_p=0;
+						while(cont<1){
+							poblacions=trams.actpoblacions(tram.GetPoblacio(),tram.GetPoblacio().length);
+							int cont_p=0;
+							while(cont_p<poblacions.length){
+								System.out.println((cont_p+1)+") "+poblacions[cont_p]);
+							cont_p++;
+							}
+							opcio_p=0;
+							while(opcio_p<1 || opcio_p>(cont_p+1)){
+								System.out.println("\nPoblacio a escollir. Opcio? ");
+								opcio_p=scan.nextInt();
+								if(opcio_p<0 || opcio_p>cont_p) System.out.println("Opcio incorrecta! Intenta-ho de nou!");
+							}
+						cont++;
+						}
+						cont=0;
+						while(cont<tram.GetPoblacio().length){
+							act_poblacions[cont]=tram.GetPoblacio()[cont];
+						cont++;
+						}
+						act_poblacions[cont]=poblacions[opcio_p-1];
+						trams.afegiruntrammes(new Trams(nom_via,act_poblacions,(tram.GetNumTrams()+1)));
+					}
+					
+					else if(opcio_admin==3){
+						int opcio_incidencies=0;
+						while(opcio_incidencies!=5 || opcio_incidencies<1 || opcio_incidencies>5){
+							System.out.println("Gestionar incidencies: \n");
+							System.out.println("1) Afegir obra");
+							System.out.println("2) Afegir accident");
+							System.out.println("3) Eliminar obra");
+							System.out.println("4) Eliminar accident");
+							System.out.println("5) Enrere");
+							System.out.println("\nOpcio del menú? ");
+							opcio_incidencies=scan.nextInt();
+								
+							if(opcio_incidencies==1){
+								int o_tipus=0;
+								String nom_via;
+								int n_via=0;
+								int cont=0;
+								while(n_via<1 || n_via>trams.Getnumtrams()){
+									System.out.println("Via en la qual ha succeït la obra? ");
+									while(cont<trams.Getnumtrams()){
+										System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+									cont++;
+									}
+								}
+								nom_via=trams.gettrams()[n_via-1].nom_via;
+								while(o_tipus<1 || o_tipus>3){
+									System.out.println("Motiu de la obra?\n ");	
+									System.out.println("1) Obres per a la millora del ferm");
+									System.out.println("2) Obres per a la millora dels elemnts de seguretat");
+									System.out.println("3) Obres per a arreglar desperfectes d'actes vandàlics");
+									System.out.println("\nOpció de tipus? ");
+									o_tipus=scan.nextInt();
+									if(o_tipus<0 || o_tipus>3) System.out.println("\nOpció de tipus incorrecte! Prova-ho de nou.");
+								}
+								int dia_inici=0;
+								int mes_inici=0;
+								int any_inici=0;
+								int dia_final=0;
+								int mes_final=0;
+								int any_final=0;
+									
+								while(dia_inici<1 || dia_inici>30){
+									System.out.println("Dia de inici de la obra: ");
+									dia_inici=scan.nextInt();
+									if(dia_inici>30 || dia_inici<0) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
+								}
+								while(mes_inici<1 || mes_inici>12){
+									System.out.println("Mes de inici de la obra: ");
+									mes_inici=scan.nextInt();
+									if(mes_inici>1 || mes_inici<13) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
+								}
+								while(any_inici<2014 || any_inici>2999){
+									System.out.println("Any de inici de la obra: ");
+									any_inici=scan.nextInt();
+									if(any_inici<2014 || any_inici>2999) System.out.println("Any entre 2014 - 2999. Prova-ho de nou");
+								}
+								while(dia_final<1 || dia_final>30){
+									System.out.println("Dia de finalització de la obra: ");
+									mes_final=scan.nextInt();
+									if(dia_final>30 || dia_final<1) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
+								}
+								while(mes_final<1 || mes_final>12){
+									System.out.println("Mes de finalització de la obra: ");
+									mes_final=scan.nextInt();
+									if(mes_final>12 || mes_final<1) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
+								}
+								while(any_final<2014 || any_final>2999){
+									System.out.println("Any de finalització de la obra: ");
+									any_final=scan.nextInt();
+									if(any_final<2014 || any_final>2999) System.out.println("Any entre 2014 - 2099. Prova-ho de nou");
+								}
+								
+								incident.agregarobra(new Obra(dia_inici,dia_final,mes_inici,mes_final,any_inici,any_final,nom_via,o_tipus));
+									
+							}
+							else if(opcio_incidencies==2){
+								String nom_via;
+								int n_via=0;
+								int cont=0;
+								while(n_via<1 || n_via>trams.Getnumtrams()){
+									System.out.println("Via en la qual ha succeït la obra? ");
+									while(cont<trams.Getnumtrams()){
+										System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+									cont++;
+									}
+								}
+								nom_via=trams.gettrams()[n_via-1].nom_via;
+								int dia=0;
+								int mes=0;
+								int any=0;
+								
+								while(dia<1 || dia>30){
+									System.out.println("Dia de inici de la obra: ");
+									dia=scan.nextInt();
+									if(dia>30 || dia<0) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
+								}
+								while(mes<1 || mes>12){
+									System.out.println("Mes de inici de la obra: ");
+									mes=scan.nextInt();
+									if(mes>1 || mes<13) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
+								}
+								while(any<2014 || any>2999){
+									System.out.println("Any de inici de la obra: ");
+									any=scan.nextInt();
+									if(any<2014 || any>2999) System.out.println("Any entre 2014 - 2999. Prova-ho de nou");
+								}
+								
+								incident.agregaraccident(new Accident(dia,mes,any,nom_via));
+								
+							}
+							
+							else if(opcio_incidencies==3){
+								System.out.println("Obra a eliminar? \n");
+								int cont=0;
+								int opcio_ob=0;
+								while(opcio_ob<1 || opcio_ob>incident.getnumobres()){
+									while(cont<incident.getnumobres()){
+										System.out.println((cont+1)+"1) "+incident.getobres()[cont]);
+										cont++;
+									}
+								System.out.println("\nNum de la obra a escollir?");
+								opcio_ob=scan.nextInt();
+									if(opcio_ob<1 || opcio_ob>incident.getnumobres()) System.out.println("Opcio de obra incorrecta! Intenta-ho de nou!\n");
+									}
+								Obra obra = incident.getobres()[opcio_ob-1];
+								incident.EsborrarObra(obra);
+							}
+								
+							
+							else if(opcio_incidencies==4){
+								System.out.println("Accident a eliminar? \n");
+								int cont=0;
+								int opcio_ac=0;
+								while(opcio_ac<1 || opcio_ac>incident.getnumobres()){
+									while(cont<incident.getnumaccidents()){
+										System.out.println((cont+1)+"1) "+incident.getaccident()[cont]);
+										cont++;
+									}
+								System.out.println("\nNumero del accident a escollir?");
+								opcio_ac=scan.nextInt();
+									if(opcio_ac<1 || opcio_ac>incident.getnumobres()) System.out.println("Opcio de accident incorrecta! Intenta-ho de nou!\n");
+								}
+								Accident accident = incident.getaccident()[opcio_ac-1];
+								incident.EsborrarAccident(accident);
+							}
+								
+								if(opcio_incidencies<1 || opcio_incidencies>5) System.out.println("Opcio incorrecta! Intenta-ho de nou! \n");
+						}
+					}
+					
+					else if(opcio_admin==4){
+						System.out.println("Gestionar conductors:\n");
+						int opcio_c=0;
+						while(opcio_c<1 || opcio_c>5){
+							int cont=0;
+							System.out.println("1) Consultar dades d'un conductor: ");
+							System.out.println("2) Consultar trajectes habituals d'un conductor: ");
+							System.out.println("3) Eliminar trajecte habitual d'un conductor: ");
+							System.out.println("4) Consultar les dades dels conductors: ");
+							System.out.println("5) Consultar trajectes habituals dels conductors");
+							System.out.println("6) Eliminar un trajecte habitual dels conductors");
+							while(cont<conductors.Getnumconductors()){
+								
+							}
+						}
+						
+						if(opcio_c==1){
+							int cont=0;
+							int num_c=0;
+							while(num_c<1 || num_c>conductors.Getnumconductors()){
+								while(cont<conductors.Getnumconductors()){
+									System.out.println((cont+1)+") "+conductors.Getllista()[cont].dni);
+								cont++;
+								}
+								System.out.println("\nNumero de conductor? ");
+								num_c=scan.nextInt();
+								if(num_c<1 || num_c>conductors.Getnumconductors()) System.out.println("Número de conductor incorrecte. Prova-ho de nou! ");
+							}
+							Conductor conductor = conductors.getconductor(conductors.Getllista()[num_c-1].dni);
+							System.out.println(conductor);
+						}
+						else if(opcio_c==2){
+							int cont=0;
+							int num_c=0;
+							while(num_c<1 || num_c>conductors.Getnumconductors()){
+								while(cont<conductors.Getnumconductors()){
+									System.out.println((cont+1)+") "+conductors.Getllista()[cont].dni);
+								cont++;
+								}
+								System.out.println("\nNumero de conductor? ");
+								num_c=scan.nextInt();
+								if(num_c<1 || num_c>conductors.Getnumconductors()) System.out.println("Número de conductor incorrecte. Prova-ho de nou! ");
+							}
+							Conductor conductor = conductors.getconductor(conductors.Getllista()[num_c-1].dni);
+							cont=0;
+							if(conductor.gettrajectes().length!=0){
+								System.out.println("Trajectes del conductor: '"+conductors.Getllista()[num_c-1].dni+"'");
+								while(cont<conductor.gettrajectes().length){
+									System.out.println(conductor.gettrajectes()[cont]);
+									cont++;
+								}
+							}
+							else System.out.println("No existeix cap trajecte habitual d'aquest conductor\n");
+						}
+						
+						else if(opcio_c==3){
+							int cont=0;
+							int num_c=0;
+							while(num_c<1 || num_c>conductors.Getnumconductors()){
+								while(cont<conductors.Getnumconductors()){
+									System.out.println((cont+1)+") "+conductors.Getllista()[cont].dni);
+								cont++;
+								}
+								System.out.println("\nNumero de conductor? ");
+								num_c=scan.nextInt();
+								if(num_c<1 || num_c>conductors.Getnumconductors()) System.out.println("Número de conductor incorrecte. Prova-ho de nou! ");
+							}
+							Conductor conductor = conductors.getconductor(conductors.Getllista()[num_c-1].dni);
+							cont=0;
+							int opcio_t=0;
+							if(conductor.gettrajectes().length!=0){
+								while(opcio_t<1 && opcio_t>conductor.gettrajectes().length){
+									System.out.println("Trajectes del conductor: '"+conductors.Getllista()[num_c-1].dni+"'");
+									while(cont<conductor.gettrajectes().length){
+										System.out.println(conductor.gettrajectes()[cont]);
+										cont++;
+									}
+									System.out.println("Número del trajecte a esborrar? ");
+									opcio_t=scan.nextInt();
+								}
+								conductor.eliminartrajecte(conductor.gettrajectes()[opcio_t-1]);
+								trajectes.eliminartrajecte(conductor.gettrajectes()[opcio_t-1]);
+							}		
+							else System.out.println("No existeix cap trajecte habitual d'aquest conductor\n");
+						}
+						
+					}
+					
+					
+					else if(opcio_admin>9 || opcio_admin<1){
+						System.out.println("\nOpcio Incorrecta! Intentaho de nou!");
+					}
+					
+					else if(opcio_admin==9){
+						
+						System.out.println("\nIntrodueix el teu DNI");
+						String dni="41002504D";
+						//String dni=scan.next();
+						
+						
+						if(!conductors.Buscar(dni)){
+							String nom_conductor;
+							int telefon=0;
+							System.out.println("Aquest conductor no existeix en la nostra base de dades.\nOmple les següents dades:");
+							System.out.println("Nom del conductor: "); nom_conductor=scan.next();
+							while((int)Math.log10((double)telefon)+1!=9){
+							System.out.println("Telèfon: ");telefon=scan.nextInt();
+							if((int)Math.log10((double)telefon)+1<9 || (int)Math.log10((double)telefon)+1>9) System.out.println("El telèfon ha de ser de 9 dígits. Intenta-ho de nou");
+							}
+							conductors.AfegirConductor(new Conductor(dni,telefon,nom_conductor));
+						}
+						
+						Conductor conductor = conductors.getconductor(dni);
+						conductor.Settrajectes(trajectes);
+						Trajectes[] trajectes_conductor=conductor.gettrajectes();
+						opcio_client=0;
+						opcio_admin=8;
+						while(opcio_client!=5){
+							System.out.println("\n--------------------------------------------------------");
+							System.out.println("--------- BENVINGUT "+conductor.nom_conductor+" amb DNI : "+dni+" ---------");
+							System.out.println("--------------------------------------------------------\n");
+							System.out.println("1) Consultar dades del conductor");
+							System.out.println("2) Consultar els teus trajectes habituals");
+							System.out.println("3) Afegir trajecte habitual");
+							System.out.println("4) Eliminar trajecte habitual");
+							System.out.println("5) Sortir del programa");
+							System.out.println("\n--------------------------------------------------");
+							System.out.println("\n6) ENTRAR COM A ADMINISTRADOR");
+
+							System.out.println("\n Opcio del menu:");
+							opcio_client=scan.nextInt();
+							if(opcio_client==1) System.out.println(conductor);
+							else if(opcio_client==2){ 
+								if(trajectes.gettrajecteconductor(dni).length==0) System.out.println("No tens cap trajecet habitual agregat! Agrega'n un!");
+								else{
+									int cont=0;
+									System.out.println("\nTrajectes habitual del conductor '"+dni+"':\n");
+									while(cont<trajectes_conductor.length){
+										System.out.println(trajectes_conductor[cont]);
+										cont++;
+									}
+								}
+							}
+							else if(opcio_client==3){
+								String nom_trajecte;
+								System.out.println("Nom del trajecte a agregar: ");
+								nom_trajecte=scan.next();
+								if(conductor.BuscarTrajecteConductor(nom_trajecte)!=null){ System.out.println("Ja existeix aquest nom del trajecte!\n");
+									Trajectes trajecte = conductor.BuscarTrajecteConductor(nom_trajecte);
+									System.out.println(trajecte);
+								}
+								else{
+									
+								}
+							}
+							else opcio_client=4;
+						}
+					}
+					
+				}
+				
+				
+			}
+			
+				
+		
+		System.out.println("\nFins aviaat");
+		trams.Actualitzarllista();
+		conductors.Actualitzarllista();
+		trajectes.Actualitzarllista();
+		incident.Actualitzarllista();
+		scan.close();
+		
+	}
+	
+}
+}

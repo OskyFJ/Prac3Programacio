@@ -10,6 +10,7 @@ public class Trajecte {
 	//private Conductor conductor; //atribut extra cada conductor ja coneix els seus trajectes no tocar de moment
 	private Tram[] trams;
 	private String nomConductor;
+	private String[] nom_vies;
 	
 	/** CONSTRUCTOR --> rebra per paràmetre el nom del conductor, el nom del trajecte i els trams i els assignarem
 	 * a les variables de la propia classe.
@@ -22,10 +23,11 @@ public class Trajecte {
 	 * 
 	 */
 	
-	public Trajecte(String nom_conductor, String nomtrajecte,Tram[] trams){
+	public Trajecte(String nom_conductor, String nomtrajecte, String[] nom_vies, Tram[] trams){
 		this.nomConductor=nom_conductor;
 		this.trams=trams;
 		this.nomTrajecte=nomtrajecte;
+		this.nom_vies=nom_vies;
 	}
 	
 	/** GETTERS i SETTERS
