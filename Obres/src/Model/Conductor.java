@@ -5,53 +5,32 @@ package Model;
  *
  */
 public class Conductor {
+	protected String nom_conductor;
+	protected int numero_mobil;
+	protected String codi_conductor;
 	
-	/** Les variables de la classe conductor son: */
-	/**el nom del conductor, numero de mòbil i el Codi. */
-	/**A més necessitem la llista de trajectes per a afegir un nou trajecte*/
-	
-	private LlistaTrajectes[] llistaTrajectes;
-	protected String nomConductor;
-	protected int numeroMobil;
-	protected String codiConductor;
-	
-	
-	/**Constructor amb paràmetres per a Conductor*/
-	
-	public Conductor(String codiConductor, String nomConductor, int numeroMobil){
-		this.codiConductor=codiConductor;
-		this.nomConductor=nomConductor;
-		this.numeroMobil=numeroMobil;		
+	public Conductor(String codi_conductor, String nom_conductor, int numero_mobil){
+		this.codi_conductor=codi_conductor;
+		this.nom_conductor=nom_conductor;
+		this.numero_mobil=numero_mobil;		
 	}
 	
-	/**Mètode per a afegir un trajecte*/
+	//Afegir trajecte a un conductor
 	
-	public void afegirTrajecte (Trajecte traj){
-		llistaTrajectes.afegirTrajecte(traj);
-	}
-	
-	/** Getter del número de mòbil*/
-	
-	public int getNumeroMobil() {
-		return numeroMobil;
-	}
-	
-	/**Getter del nom del conductor*/
-	
-	public String getNomConductor() {
-		return nomConductor;
+	public int getNumero_mobil() {
+		return numero_mobil;
 	}
 
-	/** Getter del Codi del conductor*/
-	
-	public String getCodiConductor() {
-		return codiConductor;
+	public String getNom_conductor() {
+		return nom_conductor;
 	}
 
-	/** String de la classe conductor que retorna les dades del conductor: nom, DNI i telèfon */
-	
+	public String getCodi_conductor() {
+		return codi_conductor;
+	}
+
 	public String toString(){
-		return ("\nNom del conductor: "+nomConductor+"\n\t- DNI: "+codiConductor+"\n\t- Telèfon: "+numeroMobil);
+		return ("\nNom del conductor: "+nom_conductor+"\n\t- DNI: "+codi_conductor+"\n\t- Telèfon: "+numero_mobil);
 	}
 
 }

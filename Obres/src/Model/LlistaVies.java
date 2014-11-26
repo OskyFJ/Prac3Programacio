@@ -1,3 +1,4 @@
+package Model;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,18 +41,23 @@ public class LlistaVies {
 		return via;
 	}
 	
+	
+	/* javadoc per saber què fa el metode!*/
 	public String getViaNumTram(String poblacio1, String poblacio2){
 		String nomViaTram="";
 		int cont=0;
 		while(cont<numVies){
 			int contTrams=0;
-			while(contTrams<llista[cont].getLlistaTrams().length){
-				boolean igualPoblacio1=llista[cont].getLlistaTrams()[contTrams].getPoblacio()[0].equals(poblacio1);
-				boolean igualPoblacio2=llista[cont].getLlistaTrams()[contTrams].getPoblacio()[1].equals(poblacio2);
-				
-				if(igualPoblacio1 && igualPoblacio2) nomViaTram=llista[cont].getCodiVia()+",#"+(contTrams+1);
-			}
-		cont++;
+		/*	while(contTrams<llista[cont].getLlistaTrams().length){
+			//	boolean igualPoblacio1=llista[cont].getLlistaTrams()[contTrams].getPoblacio()[0].equals(poblacio1);
+			//	boolean igualPoblacio2=llista[cont].getLlistaTrams()[contTrams].getPoblacio()[1].equals(poblacio2);
+				// DIRECTOR: aquesta comprovació que us heu copiat tots pke en 3 llocs minim la teniu igual
+				// esta una mica mal feta pke es un carro de codi mal llegible, feu encapsulació (metodes de moltes classes)
+				// x tal d'aconseguir reduïr el codi aquí (gets de llistes prohibits i els equals...
+				// potser cal revisar algun metode de la classe tram.
+			//	if(igualPoblacio1 && igualPoblacio2) nomViaTram=llista[cont].getCodiVia()+",#"+(contTrams+1);
+			}*/
+			cont++;
 		}
 		return nomViaTram;
 	}
@@ -68,17 +74,18 @@ public class LlistaVies {
 			escribir.println(llista.length+","+num_trams);
 			for (int i = 0; i < numVies; i++) {
 				String via="";
-				via+=llista[i].getLlistaTrams().length+",";
+				//via+=llista[i].getLlistaTrams().length+",";
 				int numTrams=0;
-				while(numTrams<llista[i].getLlistaTrams().length){
+				/*while(numTrams<llista[i].getLlistaTrams().length){
 					if(llista[i].getLlistaTrams().length==1){
-						via+=llista[i].getLlistaTrams()[numTrams].getPoblacio()[0]+","+llista[i].getLlistaTrams()[numTrams].getPoblacio()[1];
+						//via+=llista[i].getLlistaTrams()[numTrams].getPoblacio()[0]+","+llista[i].getLlistaTrams()[numTrams].getPoblacio()[1];
+						// DIRECTOR: tots teniu aquest exemple per a llegir de fitxer, feu servir la encapsulació! (mètodes per tot arreu, parleu entre vosaltres)
 					}
 					else{
-						via+=","+llista[i].getLlistaTrams()[numTrams].getPoblacio()[1];
+					//	via+=","+llista[i].getLlistaTrams()[numTrams].getPoblacio()[1];
 					}
 				numTrams++;
-				}
+				}*/
 				escribir.println(llista[i].getCodiVia()+","+llista[i].getTipusVia().toString().toLowerCase()+","+via);
 			}
 		escribir.close();

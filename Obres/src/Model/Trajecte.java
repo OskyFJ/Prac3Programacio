@@ -1,3 +1,4 @@
+package Model;
 /**
  * 
  * @author Xavi
@@ -7,7 +8,7 @@
 public class Trajecte {
 	private LlistaTrams llistaTrams;
 	private String nomTrajecte;
-	//private Conductor conductor; //atribut extra cada conductor ja coneix els seus trajectes no tocar de moment
+	private Conductor conductor; //atribut extra cada conductor ja coneix els seus trajectes
 	private Tram[] trams;
 	private String nomConductor;
 	private String[] nom_vies;

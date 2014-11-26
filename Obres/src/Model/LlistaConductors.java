@@ -1,3 +1,4 @@
+package Model;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -90,7 +91,8 @@ public class LlistaConductors {
 		int cont=0;
 		int pos=-1;
 		while(cont<numConductors){
-			if(llista[cont].getdni().equals(dni)) pos=cont;
+			if(llista[cont].getCodi_conductor().equals(dni)) pos=cont; //DIRECTOR: he canviat ".getdni()" per ".getCodi"
+			// DIRECTOR: aquí el que hauries de fer és un mètode .comparaDNI(String dni), pero així encara passa bé 
 		cont++;
 		}
 		return pos;
@@ -138,7 +140,7 @@ public class LlistaConductors {
 	public void actualitzarllista(){
 		File temp = new File("temp.txt");
 		if (!temp.exists()){
-				temp.createNewFile();
+				//temp.createNewFile(); //llença una excepció! (carregar de fitxer va fora d'una classe de model)
 		}
 		File conductors = new File("conductors.txt");
 		
@@ -147,7 +149,8 @@ public class LlistaConductors {
 
 			escribir.println(numConductors);
 				for (int i = 0; i < numConductors; i++) {
-					escribir.println(llista[i].getdni()+","+llista[i].getnum_telefon()+","+llista[i].getnom_conductor());
+					escribir.println("print que falta fer");//llista[i].getdni()+","+llista[i].getnum_telefon()+","+llista[i].getnom_conductor());
+					//DIRECTOR: aquí el que hauries de fer sí o sí és un mètode "String getInfo()" que retorni aquest carro
 				}
 			escribir.close();
 			conductors.delete();

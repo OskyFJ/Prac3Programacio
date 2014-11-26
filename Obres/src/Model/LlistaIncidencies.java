@@ -1,3 +1,4 @@
+package Model;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -164,23 +165,23 @@ import java.io.PrintWriter;
 	 */
 
 	
-	public Incidencia[] buscarIncidenciaVia(String via){
+	public Incidencia[] buscarIncidenciaVia(String via){ //DIRECTOR: el metode s'hauria de dir buscar IncidenciES
 		int cont=0;
 		Incidencia[] incidencies = null;
 		int contIncidencies=0;
 		while(cont<numIncidencies){
-			if(llista[cont].tramAfectat.getVia().equals(via)) contIncidencies++;	
-		cont++;
+			//if(llista[cont].tramAfectat.getVia().equals(via)) contIncidencies++; DIRECTOR:
+		cont++; //Encara no es pot fer un "getVia" pero ara ja he activat els parametres extres pk es pugui fer directament
 		}
 		cont=0;
 		incidencies=new Incidencia[contIncidencies];
 		contIncidencies=0;
 		
 		while(cont<numIncidencies){
-			if(llista[cont].tramAfectat.getVia().equals(via)){
+			/*if(llista[cont].tramAfectat.getVia().equals(via)){
 				incidencies[contIncidencies]=llista[cont];
 				contIncidencies++;	
-			}
+			}*/
 		cont++;
 		}
 		
@@ -196,11 +197,12 @@ import java.io.PrintWriter;
 	*/
 
 	
-	public Incidencia[] getIncidenciaTrajecte(Conductor conductor){
-		Incidencia[] incidencies=null;
+	public Incidencia[] getIncidenciaTrajecte(Conductor conductor){ //trobo que es un metode massa llarg pero de moment fem k funcioni
+		Incidencia[] incidencies=null; //DIRECTOR: i aquest array pke?
 		
-		Trajecte[] trajectes = conductor.getTrajectes();
-		
+//		Trajecte[] trajectes = conductor.getTrajectes(); //DIRECTOR: les operacions sobre la llista son metodes a la classe "llistaTrajectes"
+						// sempre pots escriureli o fer k escrigui el titol dels metodes i així ja compila lo teu
+				//sempre tot lo k necessitis metodes a saco
 		int cont=0;
 		int contTrajectes=0;
 		int contTrams=0;
@@ -208,17 +210,18 @@ import java.io.PrintWriter;
 		
 		while(cont<numIncidencies){
 			Tram tram = llista[cont].tramAfectat;
-			while(contTrajectes<conductor.getTrajectes().length){
+			/*while(contTrajectes<conductor.getTrajectes().length){ //DIRECTOR: metode "quantsTrajectes()" de "conductor"
 				Tram[] trams = trajectes[contTrajectes].getTrams();
 				while(contTrams<trams.length){
-					boolean igualPoblacio1=trajectes[contTrajectes].getTrams().getPoblacio()[0].equals(tram.getPoblacio()[0]);
-					boolean igualPoblacio2=trajectes[contTrajectes].getTrams().getPoblacio()[1].equals(tram.getPoblacio()[1]);;
-					if(igualPoblacio1 && igualPoblacio2) contIncidencies++;
+					//boolean igualPoblacio1=trajectes[contTrajectes].getTrams().getPoblacio()[0].equals(tram.getPoblacio()[0]);
+					//boolean igualPoblacio2=trajectes[contTrajectes].getTrams().getPoblacio()[1].equals(tram.getPoblacio()[1]);;
+					//if(igualPoblacio1 && igualPoblacio2) contIncidencies++;
+					// DIRECTOR: aquests carros! xD encapsulació! :)
 				contTrams++;
 				}
 				contTrajectes++;				
 				contTrams=0;
-			}
+			}*/
 			cont++;
 			contTrajectes=0;
 			contTrams=0;
@@ -229,10 +232,11 @@ import java.io.PrintWriter;
 		
 		incidencies=new Incidencia[contIncidencies];
 		contIncidencies=0;
-
+			
+		
 		while(cont<numIncidencies){
 			Tram tram = llista[cont].tramAfectat;
-			while(contTrajectes<conductor.getTrajectes().length){
+		/*	while(contTrajectes<conductor.getTrajectes().length){
 				Tram[] trams = trajectes[contTrajectes].getTrams();
 				while(contTrams<trams.length){
 					boolean igualPoblacio1=trajectes[contTrajectes].getTrams().getPoblacio()[0].equals(tram.getPoblacio()[0]);
@@ -245,7 +249,7 @@ import java.io.PrintWriter;
 				}
 				contTrajectes++;				
 				contTrams=0;
-			}
+			}*/
 			cont++;
 			contTrajectes=0;
 			contTrams=0;
@@ -291,11 +295,12 @@ import java.io.PrintWriter;
 					for (int i = 0; i < numIncidencies; i++) {
 						if(llista[i] instanceof Obra){
 							Obra obra = (Obra) llista[i];
-							fitxerout.println((i+1)+","+obra.getDataInici()+","+obra.getDataFi()+","+obra.getTipusObra());
+							fitxerout.println();//((i+1)+","+obra.getDataInici()+","+obra.getDataFi()+","+obra.getTipusObra());
+							//DIRECTOR: aquí el que hauries de fer sí o sí és un mètode "String getInfo()" que retorni aquest carro
 						}
 						else{
 							Accident accident = (Accident) llista[i];
-							fitxerout.println((i+1)+","+accident.getData());
+						//	fitxerout.println((i+1)+","+accident.getData()); //getDataAccident()!!
 						}
 					}
 				fitxerout.close();

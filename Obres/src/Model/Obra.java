@@ -1,3 +1,4 @@
+package Model;
 /**
  * 
  * @author Daniel
@@ -32,10 +33,10 @@ public void Obra (Data diaInici, Data mesInici, Data anyInici,Data diaFi, Data m
 	
 	/* preguntar com assignar valor a la variable tipusObra perque no tinc ni puta idea */ 
 	
-	if(nivell==1) tipusObra ="MILLORA_FERM";
+	/*if(nivell==1) tipusObra ="MILLORA_FERM";
 	else 	if (nivell==2) tipusObra= MILLORA_SEGURETAT;
 			else tipusObra=RESTAURACIO;
-	
+*/	
 }
 
 
