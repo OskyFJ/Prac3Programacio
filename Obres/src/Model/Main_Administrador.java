@@ -458,7 +458,6 @@ public static void Administrador() throws IOException{
 					//Aqui faltaria un mètode per poder modificar una via.
 					
 					//Aqui faltaria un mètode per poder amplificar a +1 la llista de trams, per
-					
 					//afegir el tram.
 					
 					
