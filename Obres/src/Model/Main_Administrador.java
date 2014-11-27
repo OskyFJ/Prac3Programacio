@@ -388,68 +388,88 @@ public static void Administrador() throws IOException{
 					System.out.println("Nom de la via a afegir el tram? \n");
 					int cont=0;
 					int opcio_via=0;
-					String nom_via;
-					while(opcio_via<1 || opcio_via>trams.Getnumtrams()){
-						while(cont<llistaTrams.Getnumtrams()){
-							System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+					nom_via="";
+					int numVies=llistaVies.getLlista().length;
+					while(opcio_via<1 || opcio_via>numVies){
+						while(cont<numVies){
+							nom_via = llistaVies.getLlista()[cont].getCodiVia();
+							System.out.println((cont+1)+") "+nom_via);
 							cont++;
 						}
-						System.out.println("\nOpcio de la població? ");
+						System.out.println("\nOpcio de via? ");
 						opcio_via=scan.nextInt();
-						if(opcio_via<1 || opcio_via>trams.Getnumtrams()) System.out.println("\nOpcio incorrecta! Intenta-ho de nou!\n");
+						if(opcio_via<1 || opcio_via>numVies) System.out.println("\nOpcio de la via incorrecte! Intenta-ho de nou!\n");
 					}
-					nom_via=trams.gettrams()[opcio_via-1].nom_via;
-					System.out.println("Sobre quina poblacio vols afegir un tram? \n");
+					nom_via= llistaVies.getLlista()[opcio_via-1].getCodiVia();
+					Via via = llistaVies.getVia(nom_via);
+					
 					cont=0;
-					int opcio_tram=0;
-					Trams tram = trams.gettram(nom_via);
-					while(opcio_tram<1 || opcio_tram>tram.GetPoblacio().length){
-						while(cont<tram.GetPoblacio().length){
-							System.out.println((cont+1)+") "+tram.GetPoblacio()[cont]);
-							cont++;
-						}
-						System.out.println("Opcio de la població? ");
-						opcio_tram=scan.nextInt();
-						if(opcio_tram<1 || opcio_tram>tram.GetPoblacio().length) System.out.println("\nOpcio incorrecta! Intenta-ho de nou!\n");
-					}
-					System.out.println("Fins a quina poblacio vols afegir el tram?\n");
-					String[] poblacions=trams.Getpoblacions();
-					String[] act_poblacions=new String[trams.Getpoblacions().length+1];
-					cont=0;
+					Tram[] trams=via.getLlistaTrams().getLlistaTrams();
+					int numTrams=via.getLlistaTrams().getLlistaTrams().length;
+					String[] poblacio1=new String[1];
+					String poblacio2;
 					int opcio_p=0;
-					while(cont<1){
-						poblacions=trams.actpoblacions(tram.GetPoblacio(),tram.GetPoblacio().length);
-						int cont_p=0;
-						while(cont_p<poblacions.length){
-							System.out.println((cont_p+1)+") "+poblacions[cont_p]);
-						cont_p++;
+					System.out.println("Desde quina població vols afegir el tram? ");
+					while(opcio_p<1 || opcio_p>23){
+						System.out.println("Poblacions: \n");
+						cont=0;
+						while(cont<23){
+							System.out.println((cont+1)+") "+poblacions[cont]);
+						cont++;	
 						}
-						opcio_p=0;
-						while(opcio_p<1 || opcio_p>(cont_p+1)){
-							System.out.println("\nPoblacio a escollir. Opcio? ");
-							opcio_p=scan.nextInt();
-							if(opcio_p<0 || opcio_p>cont_p) System.out.println("Opcio incorrecta! Intenta-ho de nou!");
-						}
-					cont++;
+						System.out.println("\nOpcio de la poblacio? ");
+						opcio_p=scan.nextInt();
+						if(opcio_p<1 || opcio_p>23) System.out.println("Numero de la poblacio incorrecte! Intenta-ho de nou!");
 					}
+					poblacio1[0]=poblacions[opcio_p-1];
+					String[] poblacions_1=actpoblacions(poblacio1,1);
+					opcio_p=0;
+					System.out.println("Fins a quina població vols afegir el tram? ");
+					while(opcio_p<1 || opcio_p>22){
+						System.out.println("Poblacions: \n");
+						cont=0;
+						while(cont<22){
+							System.out.println((cont+1)+") "+poblacions_1[cont]);
+						cont++;	
+						}
+						System.out.println("\nOpcio de la poblacio? ");
+						opcio_p=scan.nextInt();
+						if(opcio_p<1 || opcio_p>22) System.out.println("Numero de la poblacio incorrecte! Intenta-ho de nou!");
+					}
+					poblacio2=poblacions_1[opcio_p-1];
+
+					//Aqui comprovariem que no exiteixi aquest tram en la via. 
+					
+					//Que miri les dues poblacions, independentment de l'ordre de les poblacions.
+					
+					//Oriol implementa el mètode please :) :)
+					
+					//Si no existeix aques tram, creeem un nou tram
+					
+					Tram tram = new Tram(numTrams,poblacio1[0],poblacio2);
+					Tram[] trams_1=new Tram[numTrams+1];
 					cont=0;
-					while(cont<tram.GetPoblacio().length){
-						act_poblacions[cont]=tram.GetPoblacio()[cont];
-					cont++;
+					while(cont<numTrams){
+						trams[cont]=trams_1[cont];
+						cont++;
 					}
-					act_poblacions[cont]=poblacions[opcio_p-1];
-					trams.afegiruntrammes(new Trams(nom_via,act_poblacions,(tram.GetNumTrams()+1)));
+					trams_1[cont]=tram;
+					
+					//Aqui faltaria un mètode per poder modificar una via.
+					
+					//Aqui faltaria un mètode per poder amplificar a +1 la llista de trams, per
+					
+					//afegir el tram.
+					
 					
 					break;
 					
 				}
 				
-				
-				
 			}
 			
 		}
-		llistaVies.actualitzarLlista(num_trams);
+		llistaVies.actualitzarLlista(llistaTrams.getNumTrams());
 		llistaConductors.actualitzarllista();
 		llistaTrajectes.actualitzarLlista(llistaVies);
 	}
