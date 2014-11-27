@@ -463,6 +463,158 @@ public static void Administrador() throws IOException{
 					
 					break;
 					
+					case 3:
+						
+						int opcio_incidencies=0;
+						while(opcio_incidencies!=5 || opcio_incidencies<1 || opcio_incidencies>5){
+							System.out.println("Gestionar incidencies: \n");
+							System.out.println("1) Afegir obra");
+							System.out.println("2) Afegir accident");
+							System.out.println("3) Eliminar obra");
+							System.out.println("4) Eliminar accident");
+							System.out.println("5) Enrere");
+							System.out.println("\nOpcio del menú? ");
+							opcio_incidencies=scan.nextInt();
+								
+							if(opcio_incidencies==1){
+								int o_tipus=0;
+								nom_via="";
+								int n_via=0;
+								int cont=0;
+								while(n_via<1 || n_via>trams.Getnumtrams()){
+									System.out.println("Via en la qual ha succeït la obra? ");
+									while(cont<trams.Getnumtrams()){
+										System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+									cont++;
+									}
+								}
+								nom_via=trams.gettrams()[n_via-1].nom_via;
+								while(o_tipus<1 || o_tipus>3){
+									System.out.println("Motiu de la obra?\n ");	
+									System.out.println("1) Obres per a la millora del ferm");
+									System.out.println("2) Obres per a la millora dels elemnts de seguretat");
+									System.out.println("3) Obres per a arreglar desperfectes d'actes vandàlics");
+									System.out.println("\nOpció de tipus? ");
+									o_tipus=scan.nextInt();
+									if(o_tipus<0 || o_tipus>3) System.out.println("\nOpció de tipus incorrecte! Prova-ho de nou.");
+								}
+								int dia_inici=0;
+								int mes_inici=0;
+								int any_inici=0;
+								int dia_final=0;
+								int mes_final=0;
+								int any_final=0;
+									
+								while(dia_inici<1 || dia_inici>30){
+									System.out.println("Dia de inici de la obra: ");
+									dia_inici=scan.nextInt();
+									if(dia_inici>30 || dia_inici<0) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
+								}
+								while(mes_inici<1 || mes_inici>12){
+									System.out.println("Mes de inici de la obra: ");
+									mes_inici=scan.nextInt();
+									if(mes_inici>1 || mes_inici<13) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
+								}
+								while(any_inici<2014 || any_inici>2999){
+									System.out.println("Any de inici de la obra: ");
+									any_inici=scan.nextInt();
+									if(any_inici<2014 || any_inici>2999) System.out.println("Any entre 2014 - 2999. Prova-ho de nou");
+								}
+								while(dia_final<1 || dia_final>30){
+									System.out.println("Dia de finalització de la obra: ");
+									mes_final=scan.nextInt();
+									if(dia_final>30 || dia_final<1) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
+								}
+								while(mes_final<1 || mes_final>12){
+									System.out.println("Mes de finalització de la obra: ");
+									mes_final=scan.nextInt();
+									if(mes_final>12 || mes_final<1) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
+								}
+								while(any_final<2014 || any_final>2999){
+									System.out.println("Any de finalització de la obra: ");
+									any_final=scan.nextInt();
+									if(any_final<2014 || any_final>2999) System.out.println("Any entre 2014 - 2099. Prova-ho de nou");
+								}
+								
+								incident.agregarobra(new Obra(dia_inici,dia_final,mes_inici,mes_final,any_inici,any_final,nom_via,o_tipus));
+									
+							}
+							else if(opcio_incidencies==2){
+								String nom_via;
+								int n_via=0;
+								int cont=0;
+								while(n_via<1 || n_via>trams.Getnumtrams()){
+									System.out.println("Via en la qual ha succeït la obra? ");
+									while(cont<trams.Getnumtrams()){
+										System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+									cont++;
+									}
+								}
+								nom_via=trams.gettrams()[n_via-1].nom_via;
+								int dia=0;
+								int mes=0;
+								int any=0;
+								
+								while(dia<1 || dia>30){
+									System.out.println("Dia de inici de la obra: ");
+									dia=scan.nextInt();
+									if(dia>30 || dia<0) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
+								}
+								while(mes<1 || mes>12){
+									System.out.println("Mes de inici de la obra: ");
+									mes=scan.nextInt();
+									if(mes>1 || mes<13) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
+								}
+								while(any<2014 || any>2999){
+									System.out.println("Any de inici de la obra: ");
+									any=scan.nextInt();
+									if(any<2014 || any>2999) System.out.println("Any entre 2014 - 2999. Prova-ho de nou");
+								}
+								
+								incident.agregaraccident(new Accident(dia,mes,any,nom_via));
+								
+							}
+							
+							else if(opcio_incidencies==3){
+								System.out.println("Obra a eliminar? \n");
+								int cont=0;
+								int opcio_ob=0;
+								while(opcio_ob<1 || opcio_ob>incident.getnumobres()){
+									while(cont<incident.getnumobres()){
+										System.out.println((cont+1)+"1) "+incident.getobres()[cont]);
+										cont++;
+									}
+								System.out.println("\nNum de la obra a escollir?");
+								opcio_ob=scan.nextInt();
+									if(opcio_ob<1 || opcio_ob>incident.getnumobres()) System.out.println("Opcio de obra incorrecta! Intenta-ho de nou!\n");
+									}
+								Obra obra = incident.getobres()[opcio_ob-1];
+								incident.EsborrarObra(obra);
+							}
+								
+							
+							else if(opcio_incidencies==4){
+								System.out.println("Accident a eliminar? \n");
+								int cont=0;
+								int opcio_ac=0;
+								while(opcio_ac<1 || opcio_ac>incident.getnumobres()){
+									while(cont<incident.getnumaccidents()){
+										System.out.println((cont+1)+"1) "+incident.getaccident()[cont]);
+										cont++;
+									}
+								System.out.println("\nNumero del accident a escollir?");
+								opcio_ac=scan.nextInt();
+									if(opcio_ac<1 || opcio_ac>incident.getnumobres()) System.out.println("Opcio de accident incorrecta! Intenta-ho de nou!\n");
+								}
+								Accident accident = incident.getaccident()[opcio_ac-1];
+								incident.EsborrarAccident(accident);
+							}
+								
+								if(opcio_incidencies<1 || opcio_incidencies>5) System.out.println("Opcio incorrecta! Intenta-ho de nou! \n");
+						}
+					break;
+					
+					
 				}
 				
 			}
