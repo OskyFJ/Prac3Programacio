@@ -5,7 +5,6 @@ package Model;
  *
  */
 public class Conductor {	
-	private LlistaTrajectes[] llistaTrajectes;
 	private LlistaTrajectes trajecte;
 	protected String nomConductor;
 	protected int numeroMobil;
@@ -40,13 +39,13 @@ public class Conductor {
 	/**Mètode per a afegir un trajecte.
 	 */
 	public void afegirTrajecte (Trajecte traj){
-		llistaTrajectes.afegirTrajecte(traj);
+		trajecte.afegeixElement(traj);
 	}
 	
 	/**Mètode per a afegir un trajecte.
 	 */
 	public void esborrarTrajecte (Trajecte traj){
-		llistaTrajectes.esborrarTrajecte(traj);
+		trajecte.esborraElement(traj);
 	}
 
 	/** Getter del número de mòbil.

@@ -771,7 +771,111 @@ public static void Administrador() throws IOException{
 					
 					break;
 					
-					
+					case 4:
+						
+						int opcio_c=0;
+						while(opcio_c<1 || opcio_c>5){
+							
+							Conductor[] conductors = llistaConductors.getllista();
+							int numConductors=conductors.length;
+							
+							System.out.println("Gestionar conductors:\n");
+							System.out.println("1) Consultar dades d'un conductor: ");
+							System.out.println("2) Consultar trajectes habituals d'un conductor: ");
+							System.out.println("3) Eliminar trajecte habitual d'un conductor: ");
+							System.out.println("4) Consultar les dades dels conductors: ");
+							System.out.println("5) Consultar trajectes habituals dels conductors");
+							System.out.println("6) Eliminar un trajecte habitual dels conductors");
+							System.out.println("\nOpcio del menú?: ");
+							opcio_c=scan.nextInt();
+							
+							switch(opcio_c){
+							
+								case 1:
+								
+								cont=0;
+								int num_c=0;
+								while(num_c<1 || num_c>numConductors){
+									while(cont<numConductors){
+										System.out.println((cont+1)+") "+conductors[cont].getCodiConductor());
+									cont++;
+									}
+									System.out.println("\nNumero de conductor? ");
+									num_c=scan.nextInt();
+									if(num_c<1 || num_c>numConductors) System.out.println("Número de conductor incorrecte. Prova-ho de nou! ");
+								}
+								Conductor conductor = conductors[num_c-1];
+								System.out.println(conductor);
+								
+								break;
+								
+								case 2:
+									
+								cont=0;
+								num_c=0;
+								
+								while(num_c<1 || num_c>numConductors){
+									while(cont<numConductors){
+										System.out.println((cont+1)+") "+conductors[cont].getCodiConductor());
+									cont++;
+									}
+									System.out.println("\nNumero de conductor? ");
+									num_c=scan.nextInt();
+									if(num_c<1 || num_c>numConductors) System.out.println("Número de conductor incorrecte. Prova-ho de nou! ");
+								}
+								conductor = conductors[num_c-1];
+								cont=0;
+								Trajecte[] trajectes=conductor.getTrajecte().
+								if(conductor.getTrajecte().length!=0){
+									System.out.println("Trajectes del conductor: '"+llistaConductors.Getllista()[num_c-1].dni+"'");
+									while(cont<conductor.gettrajectes().length){
+										System.out.println(conductor.gettrajectes()[cont]);
+										cont++;
+									}
+								}
+								else System.out.println("No existeix cap trajecte habitual d'aquest conductor\n");
+								
+								break;
+							
+								case 3:
+									
+								int cont=0;
+								int num_c=0;
+								while(num_c<1 || num_c>llistaConductors.Getnumconductors()){
+									while(cont<llistaConductors.Getnumconductors()){
+										System.out.println((cont+1)+") "+llistaConductors.Getllista()[cont].dni);
+									cont++;
+									}
+									System.out.println("\nNumero de conductor? ");
+									num_c=scan.nextInt();
+									if(num_c<1 || num_c>llistaConductors.Getnumconductors()) System.out.println("Número de conductor incorrecte. Prova-ho de nou! ");
+								}
+								Conductor conductor = llistaConductors.getconductor(llistaConductors.Getllista()[num_c-1].dni);
+								cont=0;
+								int opcio_t=0;
+								if(conductor.gettrajectes().length!=0){
+									while(opcio_t<1 && opcio_t>conductor.gettrajectes().length){
+										System.out.println("Trajectes del conductor: '"+llistaConductors.Getllista()[num_c-1].dni+"'");
+										while(cont<conductor.gettrajectes().length){
+											System.out.println(conductor.gettrajectes()[cont]);
+											cont++;
+										}
+										System.out.println("Número del trajecte a esborrar? ");
+										opcio_t=scan.nextInt();
+									}
+									conductor.eliminartrajecte(conductor.gettrajectes()[opcio_t-1]);
+									trajectes.eliminartrajecte(conductor.gettrajectes()[opcio_t-1]);
+								}		
+								else System.out.println("No existeix cap trajecte habitual d'aquest conductor\n");
+								
+								break;
+								
+								default: System.out.println("Opcio incrrecte! Intenta-ho de nou! ");
+								
+								break;
+							}
+						
+					break;
 				}
 				
 			}
