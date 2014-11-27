@@ -48,6 +48,26 @@ public static void Administrador() throws IOException{
 		poblacions();
 	}
 
+	/*public static Tram[] trams(int cont, Tram[] tram){
+		Tram[] trams_1=new Tram[tram.length-cont];
+		int cont_1=0;
+		int cont_t=0;
+		while(cont_1<tram.length && cont_t<trams_1.length){
+			int cont_2=0;
+			boolean trobat=false;
+			while(cont_2<tram.length && !trobat){
+				if(tram[cont_2].equals(poblacions[cont_1])) trobat=true;
+			cont_2++;
+			}
+			if(!trobat){
+				poblacions_1[cont_p]=poblacions[cont_1];
+				cont_p++;
+			}
+		cont_1++;
+		}
+		return poblacions_1;
+	}*/
+
 	public static void poblacions(){
 		int contPob=0;
 		int numVies=0;
@@ -310,7 +330,7 @@ public static void Administrador() throws IOException{
 					nom_via=scan.next();
 					if(llistaVies.getVia(nom_via)!=null) System.out.println("Ja existeix aquesta via");
 					else{
-						TipusVia tipus;
+						TipusVia tipus = null;
 						int cont=0;
 						int op_t=0;
 						while(op_t<1 || op_t>5){
@@ -366,9 +386,9 @@ public static void Administrador() throws IOException{
 						}
 						cont=0;
 						Tram tram;
-						Tram[] trams;
+						Tram[] trams = null;
 						while(cont<num_trams){
-						String p_antigua;	
+						String p_antigua = null;	
 							if(cont==0){
 								tram = new Tram(cont,poblacio[cont],poblacio[cont+1]);
 								p_antigua=poblacio[cont+1];
@@ -408,8 +428,8 @@ public static void Administrador() throws IOException{
 					Via via = llistaVies.getVia(nom_via);
 					
 					cont=0;
-					Tram[] llistaTrams=via.getLlistaTrams().getLlistaTrams();
-					int numTrams=via.getLlistaTrams().getLlistaTrams().length;
+					Tram[] tramsVia=via.getLlistaTrams().getLlistaTrams();
+					int numTrams=tramsVia.length;
 					String[] poblacio1=new String[1];
 					String poblacio2;
 					int opcio_p=0;
@@ -441,46 +461,49 @@ public static void Administrador() throws IOException{
 						if(opcio_p<1 || opcio_p>22) System.out.println("Numero de la poblacio incorrecte! Intenta-ho de nou!");
 					}
 					poblacio2=poblacions_1[opcio_p-1];
-
-					//Aqui comprovariem que no exiteixi aquest tram en la via. 
-					
-					//Que miri les dues poblacions, independentment de l'ordre de les poblacions.
-					
-					//Oriol implementa el mètode please :) :)
-					
-					//Si no existeix aques tram, creeem un nou tram
 					
 					Tram tram = new Tram(numTrams,poblacio1[0],poblacio2);
-					Tram[] trams_1=new Tram[numTrams+1];
+
 					cont=0;
-					while(cont<numTrams){
-						llistaTrams[cont]=trams_1[cont];
-						cont++;
+					boolean trobat=false;
+					while(cont<numTrams && !trobat){
+						if(tramsVia[cont].correlative(tram)) trobat=true;
+					cont++;
 					}
-					trams_1[cont]=tram;
-					
-					//Aqui faltaria un mètode per poder modificar una via.
-					
-					//Aqui faltaria un mètode per poder amplificar a +1 la llista de trams, per
-					//afegir el tram.
-					
+
+					if(!trobat){
+						Tram[] trams=new Tram[numTrams+1];
+						cont=0;
+						while(cont<numTrams){
+						trams[cont]=tramsVia[cont];
+						cont++;
+						}
+						trams[cont]=tram;					
+						LlistaTrams trams_via = new LlistaTrams(trams);
+						via.setLlistaTrams(trams_via);
+					}
+					else System.out.println("Ja existeix aquest tram en aquesta via! No la pots agregar! ");
 					
 					break;
 					
 					case 3:
 						
-						int opcio_incidencies=0;
-						while(opcio_incidencies!=5 || opcio_incidencies<1 || opcio_incidencies>5){
+						int opcioIncidencies=0;
+						while(opcioIncidencies!=7 || opcioIncidencies<1 || opcioIncidencies>7){
 							System.out.println("Gestionar incidencies: \n");
 							System.out.println("1) Afegir obra");
 							System.out.println("2) Afegir accident");
 							System.out.println("3) Eliminar obra");
 							System.out.println("4) Eliminar accident");
-							System.out.println("5) Enrere");
+							System.out.println("5) Consultar Incidencia per via");
+							System.out.println("6) Consultar Incidencia per tram");
+							System.out.println("7) Enrere");
 							System.out.println("\nOpcio del menú? ");
-							opcio_incidencies=scan.nextInt();
+							opcioIncidencies=scan.nextInt();
+							
+							switch(opcioIncidencies){
+								case 1:
 								
-							if(opcio_incidencies==1){
 								int o_tipus=0;
 								nom_via="";
 								int n_via=0;
@@ -569,80 +592,183 @@ public static void Administrador() throws IOException{
 								Incidencia incidencia= new Obra(data1,data2,o_tipus,nom_via,tram);
 								llistaIncidencies.agregarIncidencia(incidencia);
 									
-							}
-							else if(opcio_incidencies==2){
-								String nom_via;
-								int n_via=0;
-								int cont=0;
-								while(n_via<1 || n_via>llistaTrams.Getnumtrams()){
-									System.out.println("Via en la qual ha succeït la obra? ");
-									while(cont<llistaTrams.Getnumtrams()){
-										System.out.println((cont+1)+") "+llistaTrams.gettrams()[cont].nom_via);
-									cont++;
-									}
-								}
-								nom_via=llistaTrams.gettrams()[n_via-1].nom_via;
-								int dia=0;
-								int mes=0;
-								int any=0;
-								
-								while(dia<1 || dia>30){
-									System.out.println("Dia de inici de la obra: ");
-									dia=scan.nextInt();
-									if(dia>30 || dia<0) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
-								}
-								while(mes<1 || mes>12){
-									System.out.println("Mes de inici de la obra: ");
-									mes=scan.nextInt();
-									if(mes>1 || mes<13) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
-								}
-								while(any<2014 || any>2999){
-									System.out.println("Any de inici de la obra: ");
-									any=scan.nextInt();
-									if(any<2014 || any>2999) System.out.println("Any entre 2014 - 2999. Prova-ho de nou");
-								}
-								
-								incident.agregaraccident(new Accident(dia,mes,any,nom_via));
-								
-							}
+								break;
 							
-							else if(opcio_incidencies==3){
-								System.out.println("Obra a eliminar? \n");
-								int cont=0;
-								int opcio_ob=0;
-								while(opcio_ob<1 || opcio_ob>incident.getnumobres()){
-									while(cont<incident.getnumobres()){
-										System.out.println((cont+1)+"1) "+incident.getobres()[cont]);
-										cont++;
-									}
-								System.out.println("\nNum de la obra a escollir?");
-								opcio_ob=scan.nextInt();
-									if(opcio_ob<1 || opcio_ob>incident.getnumobres()) System.out.println("Opcio de obra incorrecta! Intenta-ho de nou!\n");
-									}
-								Obra obra = incident.getobres()[opcio_ob-1];
-								incident.EsborrarObra(obra);
-							}
+								case 2:
 								
-							
-							else if(opcio_incidencies==4){
-								System.out.println("Accident a eliminar? \n");
-								int cont=0;
-								int opcio_ac=0;
-								while(opcio_ac<1 || opcio_ac>incident.getnumobres()){
-									while(cont<incident.getnumaccidents()){
-										System.out.println((cont+1)+"1) "+incident.getaccident()[cont]);
+									nom_via="";
+									n_via=0;
+									cont=0;
+									o_via=0;
+									vies = llistaVies.getLlista();
+									numVies=llistaVies.getLlista().length;
+									while(n_via<1 || n_via>numVies){
+										System.out.println("Via en la qual ha succeït el acident? \n");
+										while(cont<numVies){
+											System.out.println((cont+1)+") "+vies[cont].getCodiVia());
 										cont++;
+										}
+										System.out.println("\nOpcio de via? ");
+										o_via=scan.nextInt();
+										if(n_via<1 || n_via>numVies) System.out.println("Opció de via incorrecta! Intenta-ho de nou!");
 									}
-								System.out.println("\nNumero del accident a escollir?");
-								opcio_ac=scan.nextInt();
-									if(opcio_ac<1 || opcio_ac>incident.getnumobres()) System.out.println("Opcio de accident incorrecta! Intenta-ho de nou!\n");
+									via= vies[o_via-1];
+									nom_via=via.getCodiVia();
+									trams=via.getLlistaTrams().getLlistaTrams();
+									numTrams=trams.length;
+									System.out.println("Sobre quin tram ha succeït l'accident? \n");
+									cont=0;
+									o_tram=0;
+									while(o_tram<1 || o_tram>numTrams){
+										while(cont<numTrams){
+											String[] poblacio=trams[cont].getPoblacio();
+											System.out.println((cont+1)+") "+poblacio[0]+" - "+poblacio[1]);
+										cont++;
+										}
+										System.out.println("\nOpció de tram? ");
+										o_tram=scan.nextInt();
+										if(o_tram<0 || o_tram>numTrams) System.out.println("\nOpció de tipus incorrecte! Prova-ho de nou.");
+									}
+									tram = trams[o_tram-1];
+									int dia=0;
+									int mes=0;
+									int any=0;
+										
+									while(dia<1 || dia>30){
+										System.out.println("Dia del accident? ");
+										dia=scan.nextInt();
+										if(dia>30 || dia<0) System.out.println("Dia entre 1 - 30. Prova-ho de nou");
+									}
+									while(mes<1 || mes>12){
+										System.out.println("Mes del accident?");
+										mes=scan.nextInt();
+										if(mes>1 || mes<13) System.out.println("Mes entre 1 - 12. Prova-ho de nou");
+									}
+									while(any<2014 || any>2999){
+										System.out.println("Any del accident: ");
+										any=scan.nextInt();
+										if(any<2014 || any>2999) System.out.println("Any entre 2014 - 2999. Prova-ho de nou");
+									}
+									Data data = new Data(dia,mes,any);
+									incidencia = new Accident(data,tram,nom_via);
+									llistaIncidencies.agregarIncidencia(incidencia);
+									
+								break;
+								
+								case 3 :
+									
+									System.out.println("Obra a eliminar? \n");
+									cont=0;
+									int opcio_ob=0;
+									Obra[] obres = llistaIncidencies.getObres();
+									int numObres=obres.length;
+									while(opcio_ob<1 || opcio_ob>numObres){
+										while(cont<numObres){
+											System.out.println((cont+1)+"1) "+obres[cont]+"\n");
+											cont++;
+										}
+									System.out.println("\nNúmero de la obra a esborrar?");
+									opcio_ob=scan.nextInt();
+										if(opcio_ob<1 || opcio_ob>numObres) System.out.println("Opcio de obra incorrecta! Intenta-ho de nou!\n");
+									}
+									Obra obra = obres[opcio_ob-1];
+									int pos = llistaIncidencies.posicioincidencia(obra);
+									llistaIncidencies.eliminarIncidencia(pos);
+								
+								break;
+								
+								case 4:
+									
+									System.out.println("Accident a eliminar? \n");
+									cont=0;
+									int opcio_ac=0;
+									Accident[] accidents = llistaIncidencies.getAccidents();
+									int numAccidents=accidents.length;
+									while(opcio_ac<1 || opcio_ac>numAccidents){
+										while(cont<numAccidents){
+											System.out.println((cont+1)+"1) "+accidents[cont]+"\n");
+											cont++;
+										}
+									System.out.println("\nNúmero del accident a esborrar?");
+									opcio_ac=scan.nextInt();
+										if(opcio_ac<1 || opcio_ac>numAccidents) System.out.println("Opcio de accident incorrecta! Intenta-ho de nou!\n");
+									}
+									Accident accident = accidents[opcio_ac-1];
+									pos = llistaIncidencies.posicioincidencia(accident);
+									llistaIncidencies.eliminarIncidencia(pos);
+								
+								break;
+								
+								case 5:
+									
+									nom_via="";
+									n_via=0;
+									cont=0;
+									o_via=0;
+									vies = llistaVies.getLlista();
+									numVies=llistaVies.getLlista().length;
+									while(n_via<1 || n_via>numVies){
+										System.out.println("Via en la qual ha succeït el acident? \n");
+										while(cont<numVies){
+											System.out.println((cont+1)+") "+vies[cont].getCodiVia());
+										cont++;
+										}
+										System.out.println("\nOpcio de via? ");
+										o_via=scan.nextInt();
+										if(n_via<1 || n_via>numVies) System.out.println("Opció de via incorrecta! Intenta-ho de nou!");
+									}
+									via= vies[o_via-1];
+									nom_via=via.getCodiVia();
+									Incidencia[] incidencies = llistaIncidencies.buscarIncidenciaVia(nom_via);
+									int numIncidencies=incidencies.length;
+									cont=0;
+									if(incidencies.length!=0){
+										System.out.println("Incidències en la via '"+nom_via+"'");
+										while(cont<numIncidencies){
+											System.out.println(incidencies[cont]+"\n");
+										cont++;
+										}
+									}
+									else System.out.println("No existeix cap incidència en la via '"+nom_via+"'");
+								
+								break;
+								
+								case 6:
+									
+									trams= Main_Administrador.llistaTrams.getLlistaTrams();
+									numTrams=trams.length;
+									System.out.println("Sobre quin tram vols consultar l'incidència? \n");
+									cont=0;
+									o_tram=0;
+									while(o_tram<1 || o_tram>numTrams){
+										while(cont<numTrams){
+											String[] poblacio=trams[cont].getPoblacio();
+											System.out.println((cont+1)+") "+poblacio[0]+" - "+poblacio[1]);
+										cont++;
+										}
+										System.out.println("\nOpció de tram? ");
+										o_tram=scan.nextInt();
+										if(o_tram<0 || o_tram>numTrams) System.out.println("\nOpció de tipus incorrecte! Prova-ho de nou.");
+									}
+									tram = trams[o_tram-1];
+									incidencia = llistaIncidencies.buscarIncidenciaTram(tram);
+									if(incidencia==null) System.out.println("No existeix cap incidencia en aquest tram");
+									else{
+										System.out.println("Incidència en aquest tram: \n");
+										System.out.println(incidencia+"\n");
+									}
+									
+								break;
+									
+								default: System.out.println("Opcio incorrecta! Intenta-ho de nou! \n");
+									
+								break;
+								
 								}
-								Accident accident = incident.getaccident()[opcio_ac-1];
-								incident.EsborrarAccident(accident);
 							}
-								
-								if(opcio_incidencies<1 || opcio_incidencies>5) System.out.println("Opcio incorrecta! Intenta-ho de nou! \n");
-						}
+
+							
+					
 					break;
 					
 					

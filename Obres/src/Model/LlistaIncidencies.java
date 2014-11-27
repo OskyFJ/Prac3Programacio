@@ -76,16 +76,84 @@ import java.io.PrintWriter;
 		
 	}
 	
+	/** getAccidents(): obtenim la llista de accidents
+	*
+	*/
+
+	public Accident[] getAccidents(){
+		Accident[] accidents;
+		int cont=0;
+		int contaccident=0;
+		while(cont<numIncidencies){
+			if(llista[cont] instanceof Accident) contaccident++;
+		cont++;
+		}
+		cont=0;
+		accidents=new Accident[contaccident];
+		contaccident=0;
+		while(cont<numIncidencies){
+			if(llista[cont] instanceof Accident){
+				accidents[contaccident]=(Accident)llista[cont];
+				contaccident++;
+			}
+		cont++;
+		}
+	return accidents;
+	}
+	
+	/** getObres(): obtenim la llista de Obres
+	*
+	*/
+
+	public Obra[] getObres(){
+		Obra[] obres;
+		int cont=0;
+		int contobres=0;
+		while(cont<numIncidencies){
+			if(llista[cont] instanceof Obra) contobres++;
+		cont++;
+		}
+		cont=0;
+		obres=new Obra[contobres];
+		contobres=0;
+		while(cont<numIncidencies){
+			if(llista[cont] instanceof Obra){
+				obres[cont]=(Obra)llista[cont];
+				contobres++;
+			}
+		cont++;
+		}
+	return obres;
+	}
+	
+	 /** posicioincidencia(incidencia): busquem la posicio d'una incidencia passada per
+	 * paràmetre. Si no existeix, retornarà -1. modifiquem una obra de la llista. Sempre pot passar que la data
+	 * de inici o de finalització s'avanci o s'en
+	 *
+	 * @param incidencia incidència que volem buscar.
+	 * 
+	 */
+	
+	public int posicioincidencia(Incidencia incidencia){
+		int pos=-1;
+		int cont=0;
+		while(cont<numIncidencies){
+			boolean igualtram=llista[cont].tramAfectat.correlative(incidencia.tramAfectat);
+			if(igualtram) pos=cont;
+		cont++;
+		}
+		
+		return pos;
+	}
 	
 	 /** modificarIncidencia(posicio_incidencia, incidencia): modifiquem una obra de la llista. Sempre pot passar que la data
-	  * de inici o de finalització s'avanci o s'endarrereixi. Podrem modificar aquesta/aquestes 
-	  * data/dates.
+	 * de inici o de finalització s'avanci o s'endarrereixi. Podrem modificar aquesta/aquestes 
+	 * data/dates.
 	 * 
 	 * @param posicio_incidencia posició de la incidència on es vol modificar.
 	 * @param incidencia incidència que es vol modificar.
 	 * 
 	 */
-
 	
 	public void modificarIncidencia(int posicio_incidencia, Incidencia incidencia){
 		llista[posicio_incidencia-1]=incidencia;
@@ -126,36 +194,14 @@ import java.io.PrintWriter;
 
 	
 	public Incidencia buscarIncidenciaTram(Tram tram){
-		Obra obra=null;
-		Accident accident=null;
-		Obra obraLlista=null;
-		Accident accidentLlista=null;
-		Obra obraBuscar=null;
-		Accident accidentBuscar=null;
 		int cont=0;
-		String poblacio1=tram.getPoblacio()[0];
-		String poblacio2=tram.getPoblacio()[1];
-		
+		int pos=-1;
 		while(cont<numIncidencies){
-			
-			if(llista[cont] instanceof Obra) obraLlista = (Obra) llista[cont]; 
-			else accidentLlista = (Accident) llista[cont]; 
-				
-			boolean igualPoblacio1=llista[cont].tramAfectat.getPoblacio()[0].equals(poblacio1);
-			boolean igualPoblacio2=llista[cont].tramAfectat.getPoblacio()[1].equals(poblacio2);
-			
-			if(obraLlista!=null && (igualPoblacio1 && igualPoblacio2)) obraBuscar=obraLlista; 
-			
-			else if(accidentLlista!=null && (igualPoblacio1 && igualPoblacio2)) accidentBuscar=accidentLlista;
-			
-			obraLlista=null;
-			accidentLlista=null;
+			boolean igualtram=llista[cont].tramAfectat.correlative(tram);
+			if(igualtram) pos=cont;
 		cont++;
 		}
-		if(obraBuscar!=null) return obraBuscar;
-		else if(obraBuscar!=null) return accidentBuscar;
-		else return null;
-			
+		return llista[pos];
 	}
 	
 	 /** buscarIncidenciaVia(via): retornarà totes les incidències de la via passada per paràmetre. 

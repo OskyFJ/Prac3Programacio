@@ -7,16 +7,19 @@ package Model;
  */
 public class Accident extends Incidencia {
 	private Data dataAccident;
-	private String tramAfectat;
-
+	private Tram tramAfectat;
+	private String nomVia;
+		
+	
 	/**Constructor que rep per paràmetre la data de l'accident de tipus Data, i el tramAfectat.
 	 * 
 	 * @param dataAccident
 	 * @param tramAfectat
 	 */
-	public Accident(Data dataAccident, String tramAfectat){
+	public Accident(Data dataAccident, Tram tramAfectat, String nomVia){
 		this.dataAccident=dataAccident;
 		this.tramAfectat=tramAfectat;
+		
 	}
 	
 	/**Getter de dataAccident que retorna la data de l'accident.

@@ -32,7 +32,7 @@ public class LlistaTrams {
 	 */
 	public LlistaTrams(Tram[] tram){
 		numTrams=tram.length;
-		llistaTrams=new Tram[numTrams+1];
+		llistaTrams=tram;
 	}
 	
 	/**Getter de llistaTrams
