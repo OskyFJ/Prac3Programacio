@@ -6,141 +6,76 @@ package Model;
  */
 public class Obra extends Incidencia {
 	
-	private Incidencia tram_afectat;
+	private Tram tram_afectat;
 	private TipusObra tipusObra;
 	private int nivell_obra = 0;
-	
-	private Data dia_inici;
-	private Data mes_inici;
-	private Data any_inici;
-	private Data dia_final;
-	private Data mes_final;
-	private Data any_final;
-	
+	private String nomVia;
+	private Data dataInici;
+	private Data dataFinal;
 
-public void Obra (Data diaInici, Data mesInici, Data anyInici,Data diaFi, Data mesFi, Data anyFi, int nivell, Incidencia tram ) {
+public Obra (Data data1, Data data2, int nivell, String nomVia, Tram tram ) {
 
-	this.dia_inici= diaInici;
-	this.mes_inici=mesInici;
-	this.any_inici=anyInici;
-	
-	this.dia_final=diaFi;
-	this.mes_final=mesFi;
-	this.any_final=anyFi;
-	
+	this.nomVia=nomVia;
+	this.dataInici=data1;
+	this.dataFinal=data2;
 	this.tram_afectat= tram;
     
+	if(nivell==1) tipusObra =TipusObra.MILLORA_FERM;
+	else if (nivell==2) tipusObra= TipusObra.MILLORA_SEGURETAT;
+	else tipusObra=TipusObra.RESTAURACIO;
 	
-	/* preguntar com assignar valor a la variable tipusObra perque no tinc ni puta idea */ 
-	
-	/*if(nivell==1) tipusObra ="MILLORA_FERM";
-	else 	if (nivell==2) tipusObra= MILLORA_SEGURETAT;
-			else tipusObra=RESTAURACIO;
-*/	
 }
 
 
 public String toString() {
-	return  "\n\t- Tipus de obra: "+tipusObra+ 
-		    
-			"\n\t- Data inici de la obra: "+dia_inici+"/"+mes_inici+"/"+any_inici+
-	        
-			"\n\t- Data finalització: "+dia_final+"/"+mes_final+"/"+any_final;
+	return  "Via  on s'ha produit la obra? "+nomVia+
+			"\n\t- Tipus de obra: "+tipusObra+ 
+			"\n\t- Data inici de la obra: "+dataInici.data()+
+			"\n\t- Data de finalització de la obra: "+dataFinal.data();
+}
 
-	
-	}
+public String getNomVia(){
+	return nomVia;
+}
 
-
-
-
-
-
-
-public Incidencia getTram_afectat() {
+public Tram getTramAfectat() {
 	return tram_afectat;
 }
 
+//Crec que no cal aquest mètode, ja que el tram de la obra no es podra modificar
 
 public void setTram_afectat(Incidencia tram_afectat) {
 	this.tram_afectat = tram_afectat;
 }
 
+//
 
 public int getNivell_obra() {
 	return nivell_obra;
 }
 
+//No es podra canviar el motiu de la obra.
 
 public void setNivell_obra(int nivell_obra) {
 	this.nivell_obra = nivell_obra;
 }
 
+//
 
-public Data getDia_inici() {
-	return dia_inici;
+public Data getDataInici() {
+	return dataInici;
 }
 
-
-public void setDia_inici(Data dia_inici) {
-	this.dia_inici = dia_inici;
+public Data getDataFinal() {
+	return dataFinal;
 }
 
-
-public Data getMes_inici() {
-	return mes_inici;
+public void setDataInici(Data data) {
+	this.dataInici = data;
 }
 
-
-public void setMes_inici(Data mes_inici) {
-	this.mes_inici = mes_inici;
+public void setDataFinal(Data data) {
+	this.dataFinal = data;
 }
-
-
-public Data getAny_inici() {
-	return any_inici;
-}
-
-
-public void setAny_inici(Data any_inici) {
-	this.any_inici = any_inici;
-}
-
-
-public Data getDia_final() {
-	return dia_final;
-}
-
-
-public void setDia_final(Data dia_final) {
-	this.dia_final = dia_final;
-}
-
-
-public Data getMes_final() {
-	return mes_final;
-}
-
-
-public void setMes_final(Data mes_final) {
-	this.mes_final = mes_final;
-}
-
-
-public Data getAny_final() {
-	return any_final;
-}
-
-
-public void setAny_final(Data any_final) {
-	this.any_final = any_final;
-}
-
-
-
-
-
-
-
-
 
 }

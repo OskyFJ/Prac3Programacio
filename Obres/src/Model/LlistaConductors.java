@@ -103,7 +103,7 @@ public class LlistaConductors {
 		int cont=0;
 		int pos=-1;
 		while(cont<numConductors){
-			if(llista[cont].getCodi_conductor().equals(dni)) pos=cont;
+			if(llista[cont].getCodiConductor().equals(dni)) pos=cont;
 		cont++;
 		}
 		return pos;
@@ -160,7 +160,7 @@ public class LlistaConductors {
 
 			escribir.println(numConductors);
 				for (int i = 0; i < numConductors; i++) {
-					escribir.println(llista[i].getCodi_conductor()+","+llista[i].getNumero_mobil()+","+llista[i].getNom_conductor());
+					escribir.println(llista[i].getCodiConductor()+","+llista[i].getNumeroMobil()+","+llista[i].getNomConductor());
 				}
 			escribir.close();
 			conductors.delete();

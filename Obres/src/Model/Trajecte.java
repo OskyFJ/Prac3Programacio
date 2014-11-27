@@ -22,9 +22,8 @@ public class Trajecte {
 	 * 
 	 */
 	
-	public Trajecte(String nom_conductor, String nomtrajecte, String[] nom_vies, LlistaTrams llistatrams){
+	public Trajecte(String nom_conductor, String nomtrajecte, String[] nom_vies){
 		this.nomConductor=nom_conductor;
-		this.llistaTrams=llistatrams;
 		this.nomTrajecte=nomtrajecte;
 		this.nom_vies=nom_vies;
 	}
@@ -58,6 +57,10 @@ public class Trajecte {
 	
 	public String getNomConductor(){
 		return nomConductor;
+	}
+	
+	public void setLlista(LlistaTrams llista){
+		llistaTrams=llista;
 	}
 	
 	/**

@@ -125,15 +125,16 @@ public static void Administrador() throws IOException{
 
 	public static void carregarTrams() {
 		String linia, nom_via, tipus;
-		int num_trams;
+		int numTrams;
+		int numVies;
 		String[] poblacio=new String[2];
 		int cont_t=0;
 		try {
 			BufferedReader f1 = new BufferedReader(new FileReader("trams.txt"));
 			String linea = f1.readLine();
-			StringTokenizer tok = new StringTokenizer(linia, ",");
-			int numVies = Integer.parseInt(tok.nextToken());
-			int numTrams = Integer.parseInt(tok.nextToken());
+			StringTokenizer tok = new StringTokenizer(linea, ",");
+			numVies = Integer.parseInt(tok.nextToken());
+			numTrams = Integer.parseInt(tok.nextToken());
 			LlistaTrams llista;
 			for (int i = 0; i < numVies; i++) {
 				
@@ -144,7 +145,7 @@ public static void Administrador() throws IOException{
 				int numTramsVia = Integer.parseInt(tok.nextToken());			
 				Tram[] trams=new Tram[numTrams];
 				int cont=0;								
-				String pob_antigua, poblacio1, poblacio2 = null;
+				String pob_antigua = null, poblacio1 = null, poblacio2 = null;
 				Tram[] trams_t=new Tram[numTramsVia];
 				while(cont<numTramsVia){
 					int cont_poblacion=0;
@@ -176,7 +177,7 @@ public static void Administrador() throws IOException{
 				cont++;
 				cont_poblacion=0;
 				}
-			TipusVia tipusV;
+			TipusVia tipusV = null;
 			if(tipus.equals("autovia")) tipusV=TipusVia.AUTOVIA;
 			if(tipus.equals("autopista")) tipusV=TipusVia.AUTOVIA;
 			if(tipus.equals("nacional")) tipusV=TipusVia.NACIONAL;
@@ -231,17 +232,20 @@ public static void Administrador() throws IOException{
 			nom_trajecte= tok.nextToken();
 			int cont=0;
 			int num_trams=Integer.parseInt(tok.nextToken());
-			String[] trams=new String[num_trams];
+			Tram[] trams=new Tram[num_trams];
 			String[] vies=new String[num_trams];
+			int numTram[]=new int[num_trams];
 			while(cont<num_trams*2){
 				vies[cont]=tok.nextToken();
-				trams[cont]=tok.nextToken();
+				numTram[cont]=Integer.parseInt(tok.nextToken());
+				trams[cont]=llistaVies.getTramVia(vies[cont],numTram[cont-1]);
 				cont++;
 			}
-			LlistaTrams llista= new LlistaTrams(trams);
 			Conductor conductor = llistaConductors.getllista()[llistaConductors.buscarConductor(codi)];
-			Trajecte trajecte = new Trajecte(codi, nom_trajecte, vies, llista);
-			conductor.agregarTrajecte(trajecte);
+			Trajecte trajecte = new Trajecte(codi, nom_trajecte, vies);
+			LlistaTrams llista = new LlistaTrams(trams);
+			trajecte.setLlista(llista);
+			conductor.afegirTrajecte(trajecte);
 			llistaTrajectes.afegeixElement(trajecte);
 		}
 		f1.close();
@@ -404,7 +408,7 @@ public static void Administrador() throws IOException{
 					Via via = llistaVies.getVia(nom_via);
 					
 					cont=0;
-					Tram[] trams=via.getLlistaTrams().getLlistaTrams();
+					Tram[] llistaTrams=via.getLlistaTrams().getLlistaTrams();
 					int numTrams=via.getLlistaTrams().getLlistaTrams().length;
 					String[] poblacio1=new String[1];
 					String poblacio2;
@@ -450,7 +454,7 @@ public static void Administrador() throws IOException{
 					Tram[] trams_1=new Tram[numTrams+1];
 					cont=0;
 					while(cont<numTrams){
-						trams[cont]=trams_1[cont];
+						llistaTrams[cont]=trams_1[cont];
 						cont++;
 					}
 					trams_1[cont]=tram;
@@ -480,15 +484,22 @@ public static void Administrador() throws IOException{
 								int o_tipus=0;
 								nom_via="";
 								int n_via=0;
-								int cont=0;
-								while(n_via<1 || n_via>trams.Getnumtrams()){
-									System.out.println("Via en la qual ha succeït la obra? ");
-									while(cont<trams.Getnumtrams()){
-										System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+								cont=0;
+								int o_via=0;
+								Via[] vies = llistaVies.getLlista();
+								numVies=llistaVies.getLlista().length;
+								while(n_via<1 || n_via>numVies){
+									System.out.println("Via en la qual ha succeït la obra? \n");
+									while(cont<numVies){
+										System.out.println((cont+1)+") "+vies[cont].getCodiVia());
 									cont++;
 									}
+									System.out.println("\nOpcio de via? ");
+									o_via=scan.nextInt();
+									if(n_via<1 || n_via>numVies) System.out.println("Opció de via incorrecta! Intenta-ho de nou!");
 								}
-								nom_via=trams.gettrams()[n_via-1].nom_via;
+								via= vies[o_via-1];
+								nom_via=via.getCodiVia();
 								while(o_tipus<1 || o_tipus>3){
 									System.out.println("Motiu de la obra?\n ");	
 									System.out.println("1) Obres per a la millora del ferm");
@@ -498,6 +509,23 @@ public static void Administrador() throws IOException{
 									o_tipus=scan.nextInt();
 									if(o_tipus<0 || o_tipus>3) System.out.println("\nOpció de tipus incorrecte! Prova-ho de nou.");
 								}
+								
+								Tram[] trams=via.getLlistaTrams().getLlistaTrams();
+								numTrams=trams.length;
+								System.out.println("Sobre quin tram ha succeït la obra? \n");
+								cont=0;
+								int o_tram=0;
+								while(o_tram<1 || o_tram>numTrams){
+									while(cont<numTrams){
+										String[] poblacio=trams[cont].getPoblacio();
+										System.out.println((cont+1)+") "+poblacio[0]+" - "+poblacio[1]);
+									cont++;
+									}
+									System.out.println("\nOpció de tram? ");
+									o_tram=scan.nextInt();
+									if(o_tram<0 || o_tram>numTrams) System.out.println("\nOpció de tipus incorrecte! Prova-ho de nou.");
+								}
+								tram = trams[o_tram-1];
 								int dia_inici=0;
 								int mes_inici=0;
 								int any_inici=0;
@@ -535,22 +563,25 @@ public static void Administrador() throws IOException{
 									any_final=scan.nextInt();
 									if(any_final<2014 || any_final>2999) System.out.println("Any entre 2014 - 2099. Prova-ho de nou");
 								}
+								Data data1 = new Data(dia_inici,mes_inici,any_inici);
+								Data data2 = new Data(dia_final,mes_final,any_final);
 								
-								incident.agregarobra(new Obra(dia_inici,dia_final,mes_inici,mes_final,any_inici,any_final,nom_via,o_tipus));
+								Incidencia incidencia= new Obra(data1,data2,o_tipus,nom_via,tram);
+								llistaIncidencies.agregarIncidencia(incidencia);
 									
 							}
 							else if(opcio_incidencies==2){
 								String nom_via;
 								int n_via=0;
 								int cont=0;
-								while(n_via<1 || n_via>trams.Getnumtrams()){
+								while(n_via<1 || n_via>llistaTrams.Getnumtrams()){
 									System.out.println("Via en la qual ha succeït la obra? ");
-									while(cont<trams.Getnumtrams()){
-										System.out.println((cont+1)+") "+trams.gettrams()[cont].nom_via);
+									while(cont<llistaTrams.Getnumtrams()){
+										System.out.println((cont+1)+") "+llistaTrams.gettrams()[cont].nom_via);
 									cont++;
 									}
 								}
-								nom_via=trams.gettrams()[n_via-1].nom_via;
+								nom_via=llistaTrams.gettrams()[n_via-1].nom_via;
 								int dia=0;
 								int mes=0;
 								int any=0;

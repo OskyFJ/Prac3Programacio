@@ -20,19 +20,9 @@ public class Data {
 		
 	}
 	
-	
-	
-	
-	
-	
-	public String toString() {
-	
-		return("Data: dia--> "+dia+" mes--> "+mes+"any--> "+any);
+	public String data(){
+		return dia+"/"+mes+"/"+any;
 	}
-	
-	
-	
-	
 	
 	public int getDia() {
 		return dia;
@@ -58,7 +48,9 @@ public class Data {
 		this.any = any;
 	}
 	
-	
+	public String toString() {
+		return("Data: dia--> "+dia+" mes--> "+mes+"any--> "+any);
+	}
 	
 	
 	
