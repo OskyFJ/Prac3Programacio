@@ -4,33 +4,75 @@ package Model;
  * @author Julián
  *
  */
-public class Conductor {
-	protected String nom_conductor;
-	protected int numero_mobil;
-	protected String codi_conductor;
+public class Conductor {	
+	private LlistaTrajectes[] llistaTrajectes;
+	private LlistaTrajectes trajecte;
+	protected String nomConductor;
+	protected int numeroMobil;
+	protected String codiConductor;
 	
-	public Conductor(String codi_conductor, String nom_conductor, int numero_mobil){
-		this.codi_conductor=codi_conductor;
-		this.nom_conductor=nom_conductor;
-		this.numero_mobil=numero_mobil;		
+	
+	/**Constructor amb paràmetres per a Conductor, que rep el codi del conductor
+	 * el nom del conductor i el número de mòbil.
+	 */
+	public Conductor(String codiConductor, String nomConductor, int numeroMobil){
+		this.codiConductor=codiConductor;
+		this.nomConductor=nomConductor;
+		this.numeroMobil=numeroMobil;		
 	}
 	
-	//Afegir trajecte a un conductor
+	/**Getter trajecte.
+	 * 
+	 * @return trajecte
+	 */
+	public LlistaTrajectes getTrajecte() {
+		return trajecte;
+	}
 	
-	public int getNumero_mobil() {
-		return numero_mobil;
+	/**Setter de trajecte.
+	 * 
+	 * @param trajecte
+	 */
+	public void setTrajecte(LlistaTrajectes trajecte) {
+		this.trajecte = trajecte;
 	}
 
-	public String getNom_conductor() {
-		return nom_conductor;
+	/**Mètode per a afegir un trajecte.
+	 */
+	public void afegirTrajecte (Trajecte traj){
+		llistaTrajectes.afegirTrajecte(traj);
+	}
+	
+	/**Mètode per a afegir un trajecte.
+	 */
+	public void esborrarTrajecte (Trajecte traj){
+		llistaTrajectes.esborrarTrajecte(traj);
 	}
 
-	public String getCodi_conductor() {
-		return codi_conductor;
+	/** Getter del número de mòbil.
+	 */
+	public int getNumeroMobil() {
+		return numeroMobil;
+	}
+	
+	/**Getter del nom del conductor.
+	 */
+	public String getNomConductor() {
+		return nomConductor;
 	}
 
+	/**Getter del Codi del conductor.
+	 */
+	public String getCodiConductor() {
+		return codiConductor;
+	}
+
+	/**String de la classe conductor
+	 * que retorna les dades del
+	 * conductor: nom, DNI i telèfon.
+	 */
 	public String toString(){
-		return ("\nNom del conductor: "+nom_conductor+"\n\t- DNI: "+codi_conductor+"\n\t- Telèfon: "+numero_mobil);
+		return ("\nNom del conductor: "+nomConductor+"\n\t- DNI: "+codiConductor+"\n\t- Telèfon: "+numeroMobil);
 	}
 
 }
