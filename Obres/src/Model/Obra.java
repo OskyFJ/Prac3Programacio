@@ -22,7 +22,7 @@ public Obra (Data data1, Data data2, int nivell, String nomVia, Tram tram ) {
     
 	if(nivell==1) tipusObra =TipusObra.MILLORA_FERM;
 	else if (nivell==2) tipusObra= TipusObra.MILLORA_SEGURETAT;
-	else tipusObra=TipusObra.RESTAURACIO;
+		else tipusObra=TipusObra.RESTAURACIO;
 	
 }
 
@@ -42,25 +42,12 @@ public Tram getTramAfectat() {
 	return tram_afectat;
 }
 
-//Crec que no cal aquest mètode, ja que el tram de la obra no es podra modificar
 
-public void setTram_afectat(Incidencia tram_afectat) {
-	this.tram_afectat = tram_afectat;
-}
-
-//
 
 public int getNivell_obra() {
 	return nivell_obra;
 }
 
-//No es podra canviar el motiu de la obra.
-
-public void setNivell_obra(int nivell_obra) {
-	this.nivell_obra = nivell_obra;
-}
-
-//
 
 public Data getDataInici() {
 	return dataInici;
