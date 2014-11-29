@@ -1,4 +1,9 @@
 package Model;
+import javax.swing.*;
+
+import java.awt.*;
+
+import com.sun.xml.internal.ws.api.server.Container;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,16 +17,120 @@ import java.util.StringTokenizer;
  * @author Oriol
  *
  */
-public class Main_Administrador {
-	
-	public static LlistaConductors llistaConductors;
-	public static LlistaIncidencies llistaIncidencies;
-	public static LlistaVies llistaVies;
-	public static LlistaTrajectes llistaTrajectes;
-	public static LlistaTrams llistaTrams;
-	static String[] poblacions=new String[23];
-	
-public static void Administrador() throws IOException{
+   public class Main_Administrador extends JFrame {
+			
+			public static LlistaConductors llistaConductors;
+			public static LlistaIncidencies llistaIncidencies;
+			public static LlistaVies llistaVies;
+			public static LlistaTrajectes llistaTrajectes;
+			public static LlistaTrams llistaTrams;
+			static String[] poblacions=new String[23];
+			
+
+	  /**part gràfica del main, inicialitzacions gràfiques*/ 
+			
+		private static final long serialVersionUID = 1L;
+	     
+		/* constants de la graella de botons*/
+		private static  int FILES=4;
+		private static  int COLUMNES=3;
+		
+		/* creació de la graella de botons, del panell per gestionar la diferent disposició dels 
+		 * elements, etiqueta de titol i botó independent final*/
+		 
+		private JPanel panellDeBotons= new JPanel();
+		private JLabel L1= new JLabel ("\n--------------------------------------------------------\n ----- BENVINGUTS A LA ADMINISTRACIÓ DE CARRETERRES -----\n--------------------------------------------------------\n");		
+		private JButton[][] graella  = new JButton [FILES][COLUMNES];	
+		private JButton B1	= new JButton("Entrar com a conductor");
+		
+		
+		/*part gràfica del main, FI inicialitzacions gràfiques*/
+		
+		
+		
+		/*part gràfica del main, constructor de la finestra i els botons inicials*/
+		
+		public  Main_Administrador(String titol) {
+			super(titol);
+			
+			
+			
+			/* mida inicial i assignació per poder tancar la finestra*/
+		
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
+			setSize(820,600);
+			
+			
+			/* afegim contenidor a la finestra i format de sortida*/
+			java.awt.Container contenidorMain= getContentPane();
+			contenidorMain.setLayout(new BorderLayout());
+			
+			
+			
+			/* afegim el titol*/
+			
+			contenidorMain.add(L1, BorderLayout.NORTH);
+			
+			
+			
+			/* format de sortida del panell de botons*/
+	     	panellDeBotons.setLayout(new GridLayout(FILES,COLUMNES) );
+			
+	     	
+	     	
+	     	/* creació de la graella de botons*/
+	         graella[0][0]= new JButton("1) Afegir via");	
+	         panellDeBotons.add(graella[0][0]);
+			
+	         graella[0][1]= new JButton("2) Afegir tram");	
+	         panellDeBotons.add(graella[0][1]);
+			
+	         graella[1][0]= new JButton("3) Gestionar incidencies (afegir o eliminar)");	
+	         panellDeBotons.add(graella[1][0]);
+	 		
+	         graella[1][1]= new JButton("4) Gestionar conductors (afegir, eliminar i consultar els seus trajectes habituals)");	
+	         panellDeBotons.add( graella[1][1]);
+	 		
+	         graella[2][0]= new JButton("5) Consultar trams/vies");	
+	         panellDeBotons.add( graella[2][0]);
+	 		
+	         graella[2][1]= new JButton("6) Consultar trams afectats per obres");	
+	         panellDeBotons.add(graella[2][1]);
+	       
+	         graella[3][0]= new JButton("7) Consultar incidencia que es trobarà un conductor degut als seus trajectes habituals");	
+	         panellDeBotons.add(graella[3][0]);
+	         
+	         graella[3][1]= new JButton("8) Sortir del programa!");	
+	         panellDeBotons.add(graella[3][1]);
+	        
+	        
+	         
+	         /* afegim a la finestra el panell i el botó final*/
+	         contenidorMain.add(panellDeBotons,BorderLayout.CENTER);
+	     
+	         contenidorMain.add(B1, BorderLayout.SOUTH);
+	         
+	         
+	         
+	         /** bucle per afegir botons a la graella, pero nose com posar noms diferents a cada 
+	           botó utilitzant-lo */ 
+	          
+	  /*       for (int i=0; i<dimensio; i++)
+	 			for (int j=0; j<dimensio; j++) {
+	 				graella[i][j]=new JButton("\n\n");
+	 				graella[i][j].setBackground(Color.white);
+	 				graella[i][j].addActionListener(accioBoto);
+	 				panellBotons.add(graella[i][j]);
+	 			}
+			*/
+			
+			
+	         /* fem visible la finestra*/
+	         setVisible(true);
+			}
+			
+			
+ public static void Administrador() throws IOException{
 		
 		BufferedReader leer = new BufferedReader(new FileReader("trams.txt"));
 		String linea=leer.readLine();
